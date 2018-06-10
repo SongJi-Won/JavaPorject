@@ -201,12 +201,16 @@ public class JSplitPaneTest extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
 
+
+
             System.out.println("\n\n\n\n\n\n\n\n\n송지원 : SplitPaneMouseListener mouseClicked() 호출 "+e.getSource().toString());
 
             if (e.getSource() instanceof Node) {
 
                 System.out.println("\n\n\n\n\n\n\n\n\n송지원 : SplitPaneMouseListener mouseClicked() Node 클릭");
                 Node clickedNode = (Node)e.getSource();
+
+                myAttributePane.setSelectedNode(clickedNode);
 
                 String text = clickedNode.getText();
                 int x = clickedNode.getNodeX();
