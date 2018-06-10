@@ -65,4 +65,34 @@ public class MyAttributePane extends JPanel {
     }
 
 
+    public JLabel getTitle(){
+        return title;
+    }
+
+    public MyAttribute getTextAttribute() {
+        return text;
+    }
+
+
+    public MyAttribute getXAttribute() {
+        return x;
+    }
+
+
+    public MyAttribute getYAttribute() {
+        return y;
+    }
+
+    public MyAttribute getWAttribute() {
+        return w;
+    }
+
+
+    public MyAttribute getHAttribute() {
+        return h;
+    }
+
+    public MyAttribute getColorAttribute() {
+        return color;
+    }
 }

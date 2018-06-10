@@ -26,6 +26,10 @@ public class Node extends JLabel {
     Node child;
 
 
+
+    private MyAttributePane parentAttributePane;
+
+
     public Node(int id, String text, int x, int y, int w, int h, Color color, int level, Node parent, Node child) {
         super(text);
         this.id = id;
@@ -136,6 +140,13 @@ public class Node extends JLabel {
         NodeResizeAdapter r = new NodeResizeAdapter(this);
         this.addMouseMotionListener(r);
         this.addMouseListener(r);
+
+
+
+
+
+        //20180610
+        parentAttributePane = getParent().getParent().
 
     }
 

@@ -30,4 +30,9 @@ public class MyMindMapPane extends JPanel {
 //        setVisible(true);
 
     }
+
+    public void addNode(Node newNode){
+
+        this.add(newNode);
+    }
 }
