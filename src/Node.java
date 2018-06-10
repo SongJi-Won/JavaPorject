@@ -52,7 +52,7 @@ public class Node extends JLabel {
         this.parent = parent;
         this.child = child;
 
-        this.addMouseListener(new MouseListener() {
+        /*this.addMouseListener(new MouseListener() {
 
             private int pressedX;
             private int pressedY;
@@ -63,6 +63,8 @@ public class Node extends JLabel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+
+
 
             }
 
@@ -100,8 +102,55 @@ public class Node extends JLabel {
             public void mouseExited(MouseEvent e) {
 
             }
-        });
+        });*/
     }
+
+
+    public Node(int id, String text, int x, int y, int w, int h, Color color, int level, MyAttributePane myAttributePane) {
+        super(text);
+        /*this.setMinimumSize(this.getPreferredSize());*/
+        this.setMinimumSize(new Dimension(300, 100));//송지원 이거 적용안되는듯...;;
+        this.setForeground(Color.BLACK);
+        this.setHorizontalAlignment(CENTER);
+
+        this.id = id;
+
+        this.text = text;
+
+        this.nodeX = x;
+        this.nodeY = y;
+        this.point = new Point(x, y);
+        setLocation(this.point);
+
+
+        this.nodeW = w;
+        this.nodeH = h;
+        this.dimension = new Dimension(w, h);
+        setSize(this.dimension);
+
+        this.level = level;
+
+        //this.color = 레벨에 따른 다른 색상 넣기
+        this.color = Color.cyan;
+
+
+        this.parentAttributePane = myAttributePane;
+
+
+        setFont(new Font("돋움", Font.BOLD, 20));
+        setOpaque(true);
+        setBackground(Color.magenta);
+
+
+        NodeResizeAdapter r = new NodeResizeAdapter(this);
+        this.addMouseMotionListener(r);
+        this.addMouseListener(r);
+
+    }
+
+
+
+
 
 
     public Node(int id, String text, int x, int y, int w, int h, Color color, int level) {
@@ -132,6 +181,7 @@ public class Node extends JLabel {
         this.color = Color.cyan;
 
 
+
         setFont(new Font("돋움", Font.BOLD, 20));
         setOpaque(true);
         setBackground(Color.magenta);
@@ -140,15 +190,36 @@ public class Node extends JLabel {
         NodeResizeAdapter r = new NodeResizeAdapter(this);
         this.addMouseMotionListener(r);
         this.addMouseListener(r);
+        }
 
 
 
 
 
-        //20180610
-        parentAttributePane = getParent().getParent().
 
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void setParent(Node parent) {
 
@@ -255,6 +326,21 @@ public class Node extends JLabel {
             component = n;
         }
 
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            String colorcode;
+
+            parentAttributePane.getTextAttribute().setAttrValue(component.text);
+            parentAttributePane.getXAttribute().setAttrValue(""+component.getNodeX());
+            parentAttributePane.getYAttribute().setAttrValue(""+component.getNodeY());
+            parentAttributePane.getWAttribute().setAttrValue(""+component.getNodeW());
+            parentAttributePane.getHAttribute().setAttrValue(""+component.getNodeH());
+
+            colorcode = String.format("%x%x%x", component.getColor().getRed(), component.getColor().getGreen(),component.getColor().getBlue());
+            parentAttributePane.getColorAttribute().setAttrValue(colorcode);
+
+        }
 
         @Override
         public void mousePressed(MouseEvent e) {
