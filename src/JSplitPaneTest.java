@@ -17,12 +17,11 @@ public class JSplitPaneTest extends JFrame {
 
 
 
-       myTextEditorPane = new MyTextEditorPane();
-//       myTextEditorPane.getApplyBtn().addActionListener();
 
        myMindMapPane = new MyMindMapPane();
 
        myAttributePane = new MyAttributePane();
+       myTextEditorPane = new MyTextEditorPane(myMindMapPane, myAttributePane);
 
 
 
