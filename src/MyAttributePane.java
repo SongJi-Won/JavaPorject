@@ -25,11 +25,11 @@ public class MyAttributePane extends JPanel {
     {
         title = new JLabel("Attribute Pane");
 
-        text = new MyAttribute("TEXT", "None", false);
-        x = new MyAttribute("X", "0", true);
-        y = new MyAttribute("Y", "0", true);
-        w = new MyAttribute("W", "0", true);
-        h = new MyAttribute("H", "0", true);
+        text = new MyAttribute("   TEXT", "None", false);
+        x = new MyAttribute("      X", "0", true);
+        y = new MyAttribute("      Y", "0", true);
+        w = new MyAttribute("      W", "0", true);
+        h = new MyAttribute("      H", "0", true);
         color = new MyAttribute("COLOR", "0", true);
 
         changeBtn = new JButton("변경");

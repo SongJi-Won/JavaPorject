@@ -20,7 +20,7 @@ public class MyAttribute extends JPanel {
 
         this.attrValue = new JTextField(value , 10);
         this.attrValue.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-        this.attrValue.setHorizontalAlignment(JTextField.RIGHT);
+        this.attrValue.setHorizontalAlignment(JTextField.CENTER);
 
         this.editable = editable;
         attrValue.setEditable(this.editable);
@@ -28,6 +28,7 @@ public class MyAttribute extends JPanel {
 
         this.add(attrName);
         this.add(attrValue);
+        this.setAlignmentX(1.0f);
     }
 
     public JLabel getAttrName() {
