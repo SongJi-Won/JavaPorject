@@ -7,6 +7,8 @@ public class MyAttribute extends JPanel {
     private boolean editable;
     private  JTextField attrValue;
 
+
+
     public MyAttribute(String name, String value, Boolean editable)
     {
         this.setLayout(new FlowLayout());

@@ -35,4 +35,6 @@ public class MyMindMapPane extends JPanel {
 
         this.add(newNode);
     }
+
+
 }
