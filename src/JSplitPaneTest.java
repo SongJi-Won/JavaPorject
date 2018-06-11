@@ -35,6 +35,8 @@ public class JSplitPaneTest extends JFrame {
         Node newNode1 = new Node(0, "Node1", 100, 200, 300, 100, Color.pink, 0, myAttributePane);
         Node newNode2 = new Node(0, "Node2", 400, 300, 300, 100, Color.blue, 0, myAttributePane);
         Node newNode3 = new Node(0, "Node3", 200, 50, 300, 100, Color.yellow, 0, myAttributePane);
+        Node newNode4 = new Node(0, "", 0, 0, 0, 0, Color.white, 0, myAttributePane);
+
 //        Node newNode4 = new Node(0, "Node4", 700, 100, 300, 100, Color.gray, 0);
 
       /*  newNode1.addFocusListener(myFocusListener);
@@ -45,7 +47,8 @@ public class JSplitPaneTest extends JFrame {
         myMindMapPane.addNode(newNode1);
         myMindMapPane.addNode(newNode2);
         myMindMapPane.addNode(newNode3);
-//        myMindMapPane.addNode(newNode4);
+        myMindMapPane.addNode(newNode4);
+        myMindMapPane.remove(newNode4);
         myMindMapPane.repaint();
 
         myMindMapPane.addMouseListener(splitPaneMouseListener);
@@ -70,28 +73,7 @@ public class JSplitPaneTest extends JFrame {
 
 
 
-      /*  JSplitPane jSplitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollMindMap, jScrollAttribute);
-        jSplitPane1.setOneTouchExpandable(true);
 
-        jSplitPane1.setDividerSize(3);
-        jSplitPane1.setContinuousLayout(false);
-        jSplitPane1.setLeftComponent(jScrollMindMap);
-        jSplitPane1.setRightComponent(jScrollAttribute);
-
-        jSplitPane1.setDividerLocation(0.6);
-
-
-        JSplitPane jSplitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollTextArea, jSplitPane1);
-        jSplitPane2.setOneTouchExpandable(true);
-
-        jSplitPane2.setDividerSize(3);
-        jSplitPane2.setContinuousLayout(false);
-
-        jSplitPane2.setLeftComponent(jScrollTextArea);
-        jSplitPane2.setRightComponent(jSplitPane1);
-
-        jSplitPane2.setResizeWeight(0.8);
-        jSplitPane2.setDividerLocation(0.8);*/
 
         JSplitPane jSplitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollMindMap, jScrollAttribute);
         jSplitPane1.setResizeWeight(0.99);
@@ -110,7 +92,7 @@ public class JSplitPaneTest extends JFrame {
 
 
         add(jSplitPane2);
-        setSize(1000, 600);
+        setSize(1400, 800);
         setVisible(true);
 
 

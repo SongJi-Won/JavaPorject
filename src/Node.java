@@ -47,7 +47,7 @@ public class Node extends JLabel {
         this.level = level;
 
         //this.color = 레벨에 따른 다른 색상 넣기
-        this.color = Color.cyan;
+        this.color = color;
 
         this.parent = parent;
         this.child = child;
@@ -131,7 +131,7 @@ public class Node extends JLabel {
         this.level = level;
 
         //this.color = 레벨에 따른 다른 색상 넣기
-        this.color = Color.cyan;
+        this.color = color;
 
 
         this.parentAttributePane = myAttributePane;
@@ -139,7 +139,7 @@ public class Node extends JLabel {
 
         setFont(new Font("돋움", Font.BOLD, 20));
         setOpaque(true);
-        setBackground(Color.magenta);
+        setBackground(color);
 
 
         NodeResizeAdapter r = new NodeResizeAdapter(this);
@@ -178,7 +178,7 @@ public class Node extends JLabel {
         this.level = level;
 
         //this.color = 레벨에 따른 다른 색상 넣기
-        this.color = Color.cyan;
+        this.color = color;
 
 
 
@@ -398,10 +398,8 @@ public class Node extends JLabel {
         @Override
         public void mouseReleased(MouseEvent e) {
 
-//            System.out.println("송지원 : mouseReleased() 호출 pressed_r : " + pressed_r);
             pressed_r = false;
-//            System.out.println("송지원 : mouseReleased() 호출 pressed_r : " + pressed_r);
-
+            String colorcode;
 
             System.out.println("송지원 : mouseReleased() 호출 pressed_m : " + pressed_m + " / atInside : " + atInside);
 
@@ -419,6 +417,16 @@ public class Node extends JLabel {
                     pressedComponent.update(newPoint, pressedComponent.getDimension());
                 }
             }
+            parentAttributePane.setSelectedNode((Node)e.getSource());
+            parentAttributePane.getTextAttribute().setAttrValue(component.text);
+            parentAttributePane.getXAttribute().setAttrValue(""+component.getNodeX());
+            parentAttributePane.getYAttribute().setAttrValue(""+component.getNodeY());
+            parentAttributePane.getWAttribute().setAttrValue(""+component.getNodeW());
+            parentAttributePane.getHAttribute().setAttrValue(""+component.getNodeH());
+
+            colorcode = String.format("%02x%02x%02x", component.getColor().getRed(), component.getColor().getGreen(),component.getColor().getBlue());
+            parentAttributePane.getColorAttribute().setAttrValue(colorcode);
+
 
             pressed_m = false;
             atInside = false;
@@ -736,19 +744,12 @@ public class Node extends JLabel {
 
             Point p2 = getParent().getMousePosition();
 
-//            System.out.println("\n\t!#@$!@#$!@#$!@#$송지원 : getOutcode() 호출 p2.x:" + p2.x + " p2.y" + p2.y);
-
-//            System.out.println("\n\t!#@$!@#$!@#$!@#$송지원 : getOutcode() 호출 p.x:" + p.x + " p.y" + p.y);
-//            System.out.println("\t!#@$!@#$!@#$!@#$송지원 : getOutcode() 호출 point.x:" + point.x + " point.y" + point.y);
-//            System.out.println("\t!#@$!@#$!@#$!@#$송지원 : getOutcode() 호출 dimention.w:" + dimension.width + " / dimetion.h:" + dimension.height);
 
             Rectangle r = new Rectangle(component.getPoint(), component.getDimension());
 
-//            System.out.println("\n\t%^*%^*%^*%^*%^*%^*%^*송지원 : getOutcode() 호출 r.x:" + r.x + " / r.y:" + r.y + " / r.w:" + r.width + " / r.h:" + r.height);
 
             r.grow(-PROX_DIST, -PROX_DIST);
 
-//            System.out.println("\t!#@$!@#$!@#$!@#$송지원 : getOutcode() 호출 r.outcode((double)p.x, (double)p.y): " + r.outcode((double) p.x, (double) p.y) + "\n");
             return r.outcode((double) p2.x, (double) p2.y);
         }
     }
