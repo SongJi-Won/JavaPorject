@@ -270,6 +270,9 @@ public class Node extends JLabel {
     }
 
 
+
+
+
     public void setNodeX(int nodeX) {
         this.nodeX = nodeX;
     }
@@ -277,6 +280,18 @@ public class Node extends JLabel {
     public void setNodeY(int nodeY) {
         this.nodeY = nodeY;
     }
+
+    public void setNodeW(int nodeW) { this.nodeW = nodeW; }
+
+    public void setNodeH(int nodeH) { this.nodeH = nodeH; }
+
+    public void setPoint(Point point) { this.point = point; }
+
+    public void setDimension(Dimension dimension) { this.dimension = dimension; }
+
+    public void setColor(Color color) { this.color = color; }
+
+
 
 
     public void update(Point point, Dimension dimension) {
@@ -331,13 +346,14 @@ public class Node extends JLabel {
         public void mouseClicked(MouseEvent e) {
             String colorcode;
 
+            parentAttributePane.setSelectedNode((Node)e.getSource());
             parentAttributePane.getTextAttribute().setAttrValue(component.text);
             parentAttributePane.getXAttribute().setAttrValue(""+component.getNodeX());
             parentAttributePane.getYAttribute().setAttrValue(""+component.getNodeY());
             parentAttributePane.getWAttribute().setAttrValue(""+component.getNodeW());
             parentAttributePane.getHAttribute().setAttrValue(""+component.getNodeH());
 
-            colorcode = String.format("%x%x%x", component.getColor().getRed(), component.getColor().getGreen(),component.getColor().getBlue());
+            colorcode = String.format("%02x%02x%02x", component.getColor().getRed(), component.getColor().getGreen(),component.getColor().getBlue());
             parentAttributePane.getColorAttribute().setAttrValue(colorcode);
 
         }
