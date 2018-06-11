@@ -128,18 +128,16 @@ public class Node extends JLabel {
         this.dimension = new Dimension(w, h);
         setSize(this.dimension);
 
+        this.color = color;
+        this.setBackground(this.color);
+
         this.level = level;
-
-        //this.color = 레벨에 따른 다른 색상 넣기
-        this.color = Color.cyan;
-
 
         this.parentAttributePane = myAttributePane;
 
 
         setFont(new Font("돋움", Font.BOLD, 20));
         setOpaque(true);
-        setBackground(Color.magenta);
 
 
         NodeResizeAdapter r = new NodeResizeAdapter(this);
@@ -157,7 +155,6 @@ public class Node extends JLabel {
         super(text);
         /*this.setMinimumSize(this.getPreferredSize());*/
         this.setMinimumSize(new Dimension(300, 100));//송지원 이거 적용안되는듯...;;
-        this.setForeground(Color.BLACK);
         this.setHorizontalAlignment(CENTER);
 
         this.id = id;
@@ -178,13 +175,13 @@ public class Node extends JLabel {
         this.level = level;
 
         //this.color = 레벨에 따른 다른 색상 넣기
-        this.color = Color.cyan;
+        this.color = color;
+        this.setBackground(this.color);
 
 
 
         setFont(new Font("돋움", Font.BOLD, 20));
         setOpaque(true);
-        setBackground(Color.magenta);
 
 
         NodeResizeAdapter r = new NodeResizeAdapter(this);
@@ -422,6 +419,18 @@ public class Node extends JLabel {
 
             pressed_m = false;
             atInside = false;
+
+            String colorcode;
+
+            parentAttributePane.setSelectedNode((Node)e.getSource());
+            parentAttributePane.getTextAttribute().setAttrValue(component.text);
+            parentAttributePane.getXAttribute().setAttrValue(""+component.getNodeX());
+            parentAttributePane.getYAttribute().setAttrValue(""+component.getNodeY());
+            parentAttributePane.getWAttribute().setAttrValue(""+component.getNodeW());
+            parentAttributePane.getHAttribute().setAttrValue(""+component.getNodeH());
+
+            colorcode = String.format("%02x%02x%02x", component.getColor().getRed(), component.getColor().getGreen(),component.getColor().getBlue());
+            parentAttributePane.getColorAttribute().setAttrValue(colorcode);
         }
 
 

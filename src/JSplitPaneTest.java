@@ -16,13 +16,11 @@ public class JSplitPaneTest extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-
-       myTextEditorPane = new MyTextEditorPane();
-//       myTextEditorPane.getApplyBtn().addActionListener();
-
        myMindMapPane = new MyMindMapPane();
 
-       myAttributePane = new MyAttributePane();
+        myAttributePane = new MyAttributePane();
+
+        myTextEditorPane = new MyTextEditorPane(myMindMapPane, myAttributePane);
 
 
 
@@ -35,7 +33,7 @@ public class JSplitPaneTest extends JFrame {
         Node newNode1 = new Node(0, "Node1", 100, 200, 300, 100, Color.pink, 0, myAttributePane);
         Node newNode2 = new Node(0, "Node2", 400, 300, 300, 100, Color.blue, 0, myAttributePane);
         Node newNode3 = new Node(0, "Node3", 200, 50, 300, 100, Color.yellow, 0, myAttributePane);
-//        Node newNode4 = new Node(0, "Node4", 700, 100, 300, 100, Color.gray, 0);
+        Node newNode4 = new Node(0, "", 0, 0, 0, 0, Color.white, 0, myAttributePane);
 
       /*  newNode1.addFocusListener(myFocusListener);
         newNode2.addFocusListener(myFocusListener);
@@ -45,8 +43,8 @@ public class JSplitPaneTest extends JFrame {
         myMindMapPane.addNode(newNode1);
         myMindMapPane.addNode(newNode2);
         myMindMapPane.addNode(newNode3);
-//        myMindMapPane.addNode(newNode4);
-        myMindMapPane.repaint();
+        myMindMapPane.addNode(newNode4);
+        myMindMapPane.remove(newNode4);
 
         myMindMapPane.addMouseListener(splitPaneMouseListener);
 
@@ -110,7 +108,7 @@ public class JSplitPaneTest extends JFrame {
 
 
         add(jSplitPane2);
-        setSize(1000, 600);
+        setSize(1600, 1000);
         setVisible(true);
 
 
