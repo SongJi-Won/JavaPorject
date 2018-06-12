@@ -10,7 +10,21 @@ public class JSplitPaneTest extends JFrame {
 
     private SplitPaneMouseListener splitPaneMouseListener;
 
+    private MenuListener menuListener;
+
     private Node clickedNode;
+
+    private JMenuBar jMenuBar;
+    private JMenu jMenu;
+    private JMenuItem newMenuItem;
+    private JMenuItem openMenuItem;
+    private JMenuItem saveMenuItem;
+    private JMenuItem anotherNameSaveMenuItem;
+    private JMenuItem closeMenuItem;
+    private JMenuItem applyMenuItem;
+    private JMenuItem changeMenuItem;
+
+
 
 
     public JSplitPaneTest() {
@@ -24,6 +38,8 @@ public class JSplitPaneTest extends JFrame {
         this.clickedNode = null;
 
         splitPaneMouseListener = new SplitPaneMouseListener();
+
+        menuListener = new MenuListener();
 
         Node forError = new Node(0, "", 0, 0, 0, 0, Color.white, 0, null, this, myAttributePane);
 
@@ -60,6 +76,38 @@ public class JSplitPaneTest extends JFrame {
         jSplitPane2.setLeftComponent(jScrollTextArea);
         jSplitPane2.setRightComponent(jSplitPane1);
 
+
+        jMenuBar = new JMenuBar();
+
+        jMenu = new JMenu("File");
+        jMenuBar.add(jMenu);
+
+        newMenuItem = new JMenuItem("new");
+        openMenuItem = new JMenuItem("open");
+        saveMenuItem = new JMenuItem("save");
+        anotherNameSaveMenuItem = new JMenuItem("save to another name");
+        closeMenuItem = new JMenuItem("close");
+        applyMenuItem = new JMenuItem("apply");
+        changeMenuItem = new JMenuItem("change");
+
+        newMenuItem.addActionListener(menuListener);
+        openMenuItem.addActionListener(menuListener);
+        saveMenuItem.addActionListener(menuListener);
+        anotherNameSaveMenuItem.addActionListener(menuListener);
+        closeMenuItem.addActionListener(menuListener);
+        applyMenuItem.addActionListener(menuListener);
+        changeMenuItem.addActionListener(menuListener);
+
+        jMenu.add(newMenuItem);
+        jMenu.add(openMenuItem);
+        jMenu.add(saveMenuItem);
+        jMenu.add(anotherNameSaveMenuItem);
+        jMenu.add(closeMenuItem);
+        jMenu.add(applyMenuItem);
+        jMenu.add(changeMenuItem);
+
+        jMenuBar.add(jMenu);
+        setJMenuBar(jMenuBar);
 
         add(jSplitPane2);
         setSize(1400, 800);
@@ -98,6 +146,9 @@ public class JSplitPaneTest extends JFrame {
     }
 
 
+
+
+
     class SplitPaneMouseListener extends MouseAdapter {
 
 
@@ -128,6 +179,10 @@ public class JSplitPaneTest extends JFrame {
     }
 
 
+
+
+
+
     class MindMapPaneContainerListener extends ContainerAdapter {
 
         public MindMapPaneContainerListener() {
@@ -144,6 +199,60 @@ public class JSplitPaneTest extends JFrame {
         @Override
         public void componentRemoved(ContainerEvent e) {
             super.componentRemoved(e);
+        }
+    }
+
+
+
+
+    class MenuListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            if (e.getSource() == newMenuItem) {
+
+                //새로 만들기 하는 코드
+            }
+            else if (e.getSource() == openMenuItem) {
+
+                //저장했던 파일 열기 하는 코드
+            }
+            else if (e.getSource() == saveMenuItem) {
+
+                //저장하는 코드
+            }
+            else if (e.getSource() == anotherNameSaveMenuItem) {
+
+                //다른 이름으로 저장하는 코드
+            }
+            else if (e.getSource() == closeMenuItem) {
+
+                System.exit(0);
+            }
+            else if (e.getSource() == applyMenuItem) {
+
+                //적용하는 코드
+                if (myTextEditorPane != null) {
+
+                    if (myTextEditorPane.getApplyBtn() != null) {
+
+                        myTextEditorPane.getApplyBtn().doClick();
+                    }
+                }
+            }
+            else if (e.getSource() == changeMenuItem) {
+
+                //속성 페인 내용을 화면에 적용하는 코드
+                if (myAttributePane != null) {
+
+                    if (myAttributePane.getChangeBtn() != null) {
+
+                        myAttributePane.getChangeBtn().doClick();
+                    }
+                }
+            }
+
         }
 
 
