@@ -27,9 +27,9 @@ public class NodeTest extends JFrame {
     public NodeTest() {
 
 
-        n1 = new Node(1, "여름", 100, 100, 300, 200, Color.black, 0);
-        n2 = new Node(2, "날씨", 300, 300, 100, 50, Color.black, 1);
-        n3 = new Node(3, "호우", 500, 500, 100, 50, Color.black, 2);
+//        n1 = new Node(1, "여름", 100, 100, 300, 200, Color.black, 0);
+//        n2 = new Node(2, "날씨", 300, 300, 100, 50, Color.black, 1);
+//        n3 = new Node(3, "호우", 500, 500, 100, 50, Color.black, 2);
 
 //        n1.setHorizontalAlignment(SwingConstants.CENTER);
 //        n2.setHorizontalAlignment(SwingConstants.CENTER);
