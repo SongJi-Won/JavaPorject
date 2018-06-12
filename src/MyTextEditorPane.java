@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import com.google.gson.Gson;
 
 
 public class MyTextEditorPane extends JPanel {
@@ -102,9 +103,9 @@ public class MyTextEditorPane extends JPanel {
 
 
             }
-            Node newNode = new Node(5, temp[i], 100, 200, 300, 100, Color.pink, level, myAttributePane);
-            myMindMapPane.addNode(newNode);
-            System.out.println("텍스트 : " + tempStr + " 레벨 : " + level + " 부모 : " + parent[i]);
+//            Node newNode = new Node(5, temp[i], 100, 200, 300, 100, Color.pink, level, myAttributePane);
+//            myMindMapPane.addNode(newNode);
+//            System.out.println("텍스트 : " + tempStr + " 레벨 : " + level + " 부모 : " + parent[i]);
         }
 
 
