@@ -13,20 +13,19 @@ public class JSplitPaneTest extends JFrame {
     private Node clickedNode;
 
 
-    public JSplitPaneTest()
-    {
+    public JSplitPaneTest() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         myMindMapPane = new MyMindMapPane();
         myAttributePane = new MyAttributePane(this);
-        myTextEditorPane = new MyTextEditorPane(myMindMapPane, myAttributePane, this.getWidth()/2, this.getHeight()/2);
-//        myTextEditorPane = new MyTextEditorPane(myMindMapPane, myAttributePane, 500, 500);
+        myTextEditorPane = new MyTextEditorPane(this, myMindMapPane, myAttributePane, myMindMapPane.getWidth()/2, myMindMapPane.getHeight()/2);
+//        myTextEditorPane = new MyTextEditorPane(myMindMapPane, myAttributePane, 350, 350);
 
         this.clickedNode = null;
 
         splitPaneMouseListener = new SplitPaneMouseListener();
 
-        Node forError = new Node(0, "", 0, 0, 0, 0, Color.white, 0, null, myAttributePane);
+        Node forError = new Node(0, "", 0, 0, 0, 0, Color.white, 0, null, this, myAttributePane);
 
         myMindMapPane.addNode(forError);
         myMindMapPane.remove(forError);
@@ -34,42 +33,40 @@ public class JSplitPaneTest extends JFrame {
         myMindMapPane.addMouseListener(splitPaneMouseListener);
 
 
-
-
         JScrollPane jScrollTextArea = new JScrollPane(myTextEditorPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollTextArea.setSize(new Dimension(300, 800));
 
         JScrollPane jScrollMindMap = new JScrollPane(myMindMapPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollMindMap.setSize(new Dimension(800, 800));
 
         JScrollPane jScrollAttribute = new JScrollPane(myAttributePane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollAttribute.setSize(new Dimension(300, 800));
 
 
         JSplitPane jSplitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollMindMap, jScrollAttribute);
-        jSplitPane1.setResizeWeight(0.99);
+        jSplitPane1.setResizeWeight(0.8);
         jSplitPane1.setLeftComponent(jScrollMindMap);
         jSplitPane1.setRightComponent(jScrollAttribute);
 
 
         JSplitPane jSplitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollTextArea, jSplitPane1);
-        jSplitPane2.setResizeWeight(0.01);
+        jSplitPane2.setResizeWeight(0.3);
         jSplitPane2.setLeftComponent(jScrollTextArea);
         jSplitPane2.setRightComponent(jSplitPane1);
 
 
         add(jSplitPane2);
-        setSize(1400, 800);
+        setSize(1400, 1000);
         setVisible(true);
 
     }
 
-    public static void main(String []args)
-    {
+    public static void main(String[] args) {
         new JSplitPaneTest();
     }
-
-
 
 
     public MyTextEditorPane getMyTextEditorPane() {
@@ -89,49 +86,28 @@ public class JSplitPaneTest extends JFrame {
     }
 
     public void setClickedNode(Node clickedNode) {
+
+        if (this.clickedNode != null) {
+
+            this.clickedNode.setBackground(this.clickedNode.getColor());
+        }
         this.clickedNode = clickedNode;
     }
-
 
 
     class SplitPaneMouseListener extends MouseAdapter {
 
 
-
         @Override
         public void mouseClicked(MouseEvent e) {
 
-
-
-
-            if (e.getSource() instanceof Node) {
-
-                Node clickedNode = (Node)e.getSource();
-                setClickedNode(clickedNode);
-
-                myAttributePane.setSelectedNode(clickedNode);
-
-                String text = clickedNode.getText();
-                int x = clickedNode.getNodeX();
-                int y = clickedNode.getNodeY();
-                int w = clickedNode.getNodeW();
-                int h = clickedNode.getNodeH();
-                Color color = clickedNode.getColor();
-
-                myAttributePane.getTextAttribute().setAttrValue(text);
-                myAttributePane.getXAttribute().setAttrValue(""+x);
-                myAttributePane.getYAttribute().setAttrValue(""+y);
-                myAttributePane.getWAttribute().setAttrValue(""+w);
-                myAttributePane.getHAttribute().setAttrValue(""+h);
-                myAttributePane.getColorAttribute().setAttrValue(""+color.toString());
-            }
+            clickedNode.setBackground(clickedNode.getColor());
+            clickedNode = null;
         }
 
 
         @Override
         public void mousePressed(MouseEvent e) {
-            Node clickedNode = (Node)e.getSource();
-            setClickedNode(clickedNode);
         }
 
         @Override
@@ -147,8 +123,6 @@ public class JSplitPaneTest extends JFrame {
         public void mouseExited(MouseEvent e) {
         }
     }
-
-
 
 
     class MindMapPaneContainerListener extends ContainerAdapter {
@@ -168,8 +142,6 @@ public class JSplitPaneTest extends JFrame {
         public void componentRemoved(ContainerEvent e) {
             super.componentRemoved(e);
         }
-
-
 
 
     }

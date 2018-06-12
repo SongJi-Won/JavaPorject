@@ -1,5 +1,6 @@
 /.idea
 /out
+<<<<<<< HEAD
 *.class
 *.xml
 out/production/JavaProject/*.class
@@ -13,3 +14,5 @@ out/production/JavaProject/MyAttributePane.class
 out/production/JavaProject/MyTextEditorPane.class
 out/production/JavaProject/Node$NodeResizeAdapter.class
 out/production/JavaProject/Node.class
+=======
+>>>>>>> 450a0ed53be39f5003a3a3cd4dce3f68834dc884

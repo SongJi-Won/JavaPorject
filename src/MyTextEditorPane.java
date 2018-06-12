@@ -12,6 +12,7 @@ public class MyTextEditorPane extends JPanel {
 
     private JButton applyBtn;
 
+    private JSplitPaneTest jSplitPaneTest;
     private MyMindMapPane myMindMapPane;
     private MyAttributePane myAttributePane;
 
@@ -22,13 +23,14 @@ public class MyTextEditorPane extends JPanel {
     private int centerX;
     private int centerY;
 
-    public MyTextEditorPane(MyMindMapPane myMindMapPane, MyAttributePane myAttributePane, int centerX, int centerY) {
+    public MyTextEditorPane(JSplitPaneTest jSplitPaneTest, MyMindMapPane myMindMapPane, MyAttributePane myAttributePane, int centerX, int centerY) {
         title = new JLabel("Text Label Pane");
 
         textArea = new JTextArea(20, 14);
 
         applyBtn = new JButton("적용");
 
+        this.jSplitPaneTest = jSplitPaneTest;
         this.myMindMapPane = myMindMapPane;
         this.myAttributePane = myAttributePane;
 
@@ -81,11 +83,11 @@ public class MyTextEditorPane extends JPanel {
 
             //적채형 여기서 부터가 새로 노드 넣어주는 부분이에요
             //그 줄 갯수? 받아오셔서 반복문 도시면서 하시면 될듯!
-            Node rootNode = new Node(id++, "읽어들여온 정보 ", centerX, centerY, 300, 100, Color.pink, 0, null, myAttributePane); //가운데 루트 노드
+            Node rootNode = new Node(id++, "읽어들여온 정보 ", centerX, centerY, 300, 100, Color.pink, 0, null, jSplitPaneTest,  myAttributePane); //가운데 루트 노드
 
             d = Math.sqrt(rootNode.getNodeW()*rootNode.getNodeW()*0.1 + 4*rootNode.getNodeH()*rootNode.getNodeH()*0.1); //루트 노드 기반으로 각 노드간 벌릴 거리 구하는 식
 
-            Node newNode = new Node(id++, "Node2", centerX, centerY, 300, 100, Color.pink, 0, rootNode, myAttributePane); //여기세 rootNode 부분에 새로 생성하는 노드 newNode의 부모 노드 객체 넣어줘야 해요!
+            Node newNode = new Node(id++, "Node2", centerX, centerY, 300, 100, Color.pink, 0, rootNode, jSplitPaneTest, myAttributePane); //여기세 rootNode 부분에 새로 생성하는 노드 newNode의 부모 노드 객체 넣어줘야 해요!
             //이 부분이 좀 어려울것같은데 지금 드는 생각으로는 각 노드별로 아이디 값 저장해둔 다음에 아이디값 주면 노드 객체 리턴는 메소드 짜서 그 메소드로 노드 객체 받아서 넣는 방법이 떠오르네요
 
             Node parentNode = newNode.getParentNode(); //그리고 이부분은 부모가 있으면 부모와 위치 기반으로 자식 위치 설정해주는 부분인데 좀 안되요...;;생각만큼
@@ -100,12 +102,10 @@ public class MyTextEditorPane extends JPanel {
             }
 
 
-            Node forError = new Node(-1, "", 0,0,0,0,Color.white,-1, null, myAttributePane); //애는 그 마지막 노드 사이즈 개떡같이 나오는 부분 처리 해주는 애에요
 
             myMindMapPane.addNode(parentNode); //여기서는 제가 2개만 명시적으로 때려박아서 두줄만으로 노드 추가해요. 포문 같은걸로 돌리시면 될듯!
             myMindMapPane.addNode(newNode);
 
-            myMindMapPane.addNode(forError);
 
             //여기가 끝!
 

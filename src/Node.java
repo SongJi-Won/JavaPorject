@@ -27,34 +27,35 @@ public class Node extends JLabel {
 
 
 
+    private JSplitPaneTest jSplitPaneTest;
     private MyAttributePane parentAttributePane;
 
 
-    public Node(int id, String text, int x, int y, int w, int h, Color color, int level, Node parent, Node child) {
-        super(text);
-        this.id = id;
+//    public Node(int id, String text, int x, int y, int w, int h, Color color, int level, Node parent, Node child) {
+//        super(text);
+//        this.id = id;
+//
+//        this.text = text;
+//
+//        this.nodeX = x;
+//        this.nodeY = y;
+//        this.point = new Point(x, y);
+//
+//        this.nodeW = w;
+//        this.nodeH = h;
+//        this.dimension = new Dimension(w, h);
+//
+//        this.level = level;
+//
+//        //this.color = 레벨에 따른 다른 색상 넣기
+//        this.color = color;
+//
+//        this.parent = parent;
+//
+//    }
 
-        this.text = text;
 
-        this.nodeX = x;
-        this.nodeY = y;
-        this.point = new Point(x, y);
-
-        this.nodeW = w;
-        this.nodeH = h;
-        this.dimension = new Dimension(w, h);
-
-        this.level = level;
-
-        //this.color = 레벨에 따른 다른 색상 넣기
-        this.color = color;
-
-        this.parent = parent;
-
-    }
-
-
-    public Node(int id, String text, int x, int y, int w, int h, Color color, int level, Node parent, MyAttributePane myAttributePane) {
+    public Node(int id, String text, int x, int y, int w, int h, Color color, int level, Node parent, JSplitPaneTest jSplitPaneTest, MyAttributePane myAttributePane) {
         super(text);
         this.setMinimumSize(new Dimension(300, 100));//송지원 이거 적용안되는듯...;;
         this.setForeground(Color.BLACK);
@@ -82,6 +83,8 @@ public class Node extends JLabel {
 
         this.parent = parent;
 
+        this.jSplitPaneTest = jSplitPaneTest;
+
         this.parentAttributePane = myAttributePane;
 
 
@@ -100,42 +103,42 @@ public class Node extends JLabel {
 
 
 
-    public Node(int id, String text, int x, int y, int w, int h, Color color, int level) {
-        super(text);
-        this.setMinimumSize(new Dimension(300, 100));//송지원 이거 적용안되는듯...;;
-        this.setHorizontalAlignment(CENTER);
-
-        this.id = id;
-
-        this.text = text;
-
-        this.nodeX = x;
-        this.nodeY = y;
-        this.point = new Point(x, y);
-        setLocation(this.point);
-
-
-        this.nodeW = w;
-        this.nodeH = h;
-        this.dimension = new Dimension(w, h);
-        setSize(this.dimension);
-
-        this.level = level;
-
-        //this.color = 레벨에 따른 다른 색상 넣기
-        this.color = color;
-        this.setBackground(this.color);
-
-
-
-        setFont(new Font("돋움", Font.BOLD, 20));
-        setOpaque(true);
-
-
-        NodeResizeAdapter r = new NodeResizeAdapter(this);
-        this.addMouseMotionListener(r);
-        this.addMouseListener(r);
-        }
+//    public Node(int id, String text, int x, int y, int w, int h, Color color, int level) {
+//        super(text);
+//        this.setMinimumSize(new Dimension(300, 100));//송지원 이거 적용안되는듯...;;
+//        this.setHorizontalAlignment(CENTER);
+//
+//        this.id = id;
+//
+//        this.text = text;
+//
+//        this.nodeX = x;
+//        this.nodeY = y;
+//        this.point = new Point(x, y);
+//        setLocation(this.point);
+//
+//
+//        this.nodeW = w;
+//        this.nodeH = h;
+//        this.dimension = new Dimension(w, h);
+//        setSize(this.dimension);
+//
+//        this.level = level;
+//
+//        //this.color = 레벨에 따른 다른 색상 넣기
+//        this.color = color;
+//        this.setBackground(this.color);
+//
+//
+//
+//        setFont(new Font("돋움", Font.BOLD, 20));
+//        setOpaque(true);
+//
+//
+//        NodeResizeAdapter r = new NodeResizeAdapter(this);
+//        this.addMouseMotionListener(r);
+//        this.addMouseListener(r);
+//        }
 
 
 
@@ -288,16 +291,23 @@ public class Node extends JLabel {
         @Override
         public void mouseClicked(MouseEvent e) {
             String colorcode;
+            int red = component.getColor().getRed();
+            int green = component.getColor().getGreen();
+            int blue = component.getColor().getBlue();
 
-            parentAttributePane.setSelectedNode((Node)e.getSource());
-            parentAttributePane.getTextAttribute().setAttrValue(component.text);
-            parentAttributePane.getXAttribute().setAttrValue(""+component.getNodeX());
-            parentAttributePane.getYAttribute().setAttrValue(""+component.getNodeY());
-            parentAttributePane.getWAttribute().setAttrValue(""+component.getNodeW());
-            parentAttributePane.getHAttribute().setAttrValue(""+component.getNodeH());
+//            parentAttributePane.setSelectedNode((Node)e.getSource());
+//            parentAttributePane.getTextAttribute().setAttrValue(component.text);
+//            parentAttributePane.getXAttribute().setAttrValue(""+component.getNodeX());
+//            parentAttributePane.getYAttribute().setAttrValue(""+component.getNodeY());
+//            parentAttributePane.getWAttribute().setAttrValue(""+component.getNodeW());
+//            parentAttributePane.getHAttribute().setAttrValue(""+component.getNodeH());
 
             colorcode = String.format("%02x%02x%02x", component.getColor().getRed(), component.getColor().getGreen(),component.getColor().getBlue());
             parentAttributePane.getColorAttribute().setAttrValue(colorcode);
+
+            component.setBackground(new Color(255-red, 255-green, 255-blue));
+
+            jSplitPaneTest.setClickedNode(component);
 
         }
 
