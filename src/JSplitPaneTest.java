@@ -97,17 +97,12 @@ public class JSplitPaneTest extends JFrame {
     class SplitPaneMouseListener extends MouseAdapter {
 
 
-        public SplitPaneMouseListener()
-        {
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : SplitPaneMouseListener 생성");
-        }
 
         @Override
         public void mouseClicked(MouseEvent e) {
 
 
 
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : SplitPaneMouseListener mouseClicked() 호출 "+e.getSource().toString());
 
             if (e.getSource() instanceof Node) {
 
@@ -135,25 +130,21 @@ public class JSplitPaneTest extends JFrame {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : SplitPaneMouseListener mousePressed() 호출");
             Node clickedNode = (Node)e.getSource();
             setClickedNode(clickedNode);
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : SplitPaneMouseListener mouseReleased() 호출");
         }
 
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : SplitPaneMouseListener mouseEntered() 호출");
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : SplitPaneMouseListener mouseExited() 호출");
         }
     }
 

@@ -59,47 +59,24 @@ public class MyAttributePane extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-
-
-            //System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출 ");
-
             Pattern p = Pattern.compile("[0-9|a-f|A-F][0-9|a-f|A-F][0-9|a-f|A-F][0-9|a-f|A-F][0-9|a-f|A-F][0-9|a-f|A-F]");
             int red;
             int green;
             int blue;
 
             int getX = Integer.parseInt(x.getAttrValue().getText());
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출  X:"+getX);
             int getY = Integer.parseInt(y.getAttrValue().getText());
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출  Y:"+getY);
             int getW = Integer.parseInt(w.getAttrValue().getText());
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출  W:"+getW);
             int getH = Integer.parseInt(h.getAttrValue().getText());
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출  H:"+getH);
             String getCOLOR = color.getAttrValue().getText().toUpperCase();
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출  COLOR:"+getCOLOR);
 
 
             Matcher m = p.matcher(getCOLOR);
 
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출  m:"+m.find());
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출  red/green/b;ue:"+m.group());
-
-
-
             red = Integer.parseInt(m.group().substring(0,2), 16);
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출  red:"+red);
             green = Integer.parseInt(m.group().substring(2,4), 16);
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출  green:"+green);
             blue = Integer.parseInt(m.group().substring(4,6), 16);
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출  blue:"+blue);
 
-
-//            selectedNode.setNodeX(getX);
-//            selectedNode.setNodeY(getY);
-//            selectedNode.setNodeW(getW);
-//            selectedNode.setNodeH(getH);
-            //update() 함수가 대체 가능해서 생략
             selectedNode.update(new Point(getX, getY), new Dimension(getW, getH));
             selectedNode.setColor(new Color(red, green, blue));
 
@@ -149,7 +126,6 @@ public class MyAttributePane extends JPanel {
 
 
     public void setSelectedNode(Node selectedNode) {
-        //System.out.println("\n\n\n\n\n\n\n\n\n\t\t\t송지원 : MyAttributePane selectedNode() 호출  :"+selectedNode.getText());
         this.selectedNode = selectedNode;
     }
 }

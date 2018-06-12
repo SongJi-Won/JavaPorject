@@ -42,29 +42,18 @@ public class MyMindMapPane extends JPanel {
 
         this.add(board, BorderLayout.CENTER);
 
-//        setSize(500, 500);
-
-//        setVisible(true);
 
     }
 
     public void addNode(Node newNode){
-        System.out.println("송지원 : MyMindMapPane addNode() 호출");
 
         Node parrentNode = newNode.getParentNode();
 
         if (parrentNode != null) {
-            System.out.println("송지원 : MyMindMapPane addNode() / parentNode != null");
 
-//           Point[] shortestPoints = getShortestPoint(newNode, parrentNode);
-//            ArrowLineExample2 arrowLineExample2 = new ArrowLineExample2(shortestPoints[0], shortestPoints[1]);
-
-//            this.add(arrowLineExample2);
             this.repaint();
         }
-
         newNode.addComponentListener(this.myComponentAdapter);
-
 
         this.add(newNode);
 
@@ -79,21 +68,14 @@ public class MyMindMapPane extends JPanel {
 
     public Point[] getShortestPoint(Node node1, Node node2)
     {
-        System.out.println("\n\nShoertest Point : 시작");
-
         Double distance;
         Double tempdis;
         Point [] returnPoints = new Point[2];
 
-        System.out.println("\n\nShoertest Point Node1.getText(): "+node1.getText());
         Point p11 = new Point(node1.getNodeX(), node1.getNodeY()+node1.getNodeH()/2);
-        System.out.println("\n\nShoertest Point Node1.p11: ("+p11.x+", "+p11.y+")");
         Point p12 = new Point(node1.getNodeX()+node1.getNodeW()/2, node1.getNodeY());
-        System.out.println("\n\nShoertest Point Node1.p12: ("+p12.x+", "+p12.y+")");
         Point p13 = new Point(node1.getNodeX()+node1.getNodeW(), node1.getNodeY()+node1.getNodeH()/2);
-        System.out.println("\n\nShoertest Point Node1.p13: ("+p13.x+", "+p13.y+")");
         Point p14 = new Point(node1.getNodeX()+node1.getNodeW()/2, node1.getNodeY()+node1.getNodeH());
-        System.out.println("\n\nShoertest Point Node1.p14: ("+p14.x+", "+p14.y+")");
 
         Point[] p1 = new Point[4];
         p1[0] = p11;
@@ -102,15 +84,10 @@ public class MyMindMapPane extends JPanel {
         p1[3] = p14;
 
 
-        System.out.println("\n\nShoertest Point Node2.getText(): "+node2.getText());
         Point p21 = new Point(node2.getNodeX(), node2.getNodeY()+node2.getNodeH()/2);
-        System.out.println("\n\nShoertest Point Node2.p21: ("+p21.x+", "+p21.y+")");
         Point p22 = new Point(node2.getNodeX()+node2.getNodeW()/2, node2.getNodeY());
-        System.out.println("\n\nShoertest Point Node2.p22: ("+p22.x+", "+p22.y+")");
         Point p23 = new Point(node2.getNodeX()+node2.getNodeW(), node2.getNodeY()+node2.getNodeH()/2);
-        System.out.println("\n\nShoertest Point Node2.p23: ("+p23.x+", "+p23.y+")");
         Point p24 = new Point(node2.getNodeX()+node2.getNodeW()/2, node2.getNodeY()+node2.getNodeH());
-        System.out.println("\n\nShoertest Point Node2.p24: ("+p24.x+", "+p24.y+")");
 
         Point[] p2 = new Point[4];
         p2[0] = p21;
@@ -127,10 +104,8 @@ public class MyMindMapPane extends JPanel {
 
                 tempdis = getDistance(p1[i], p2[j]);
 
-                System.out.println("p1["+i+"] ~ p2["+j+"] : "+tempdis);
                 if (distance > tempdis){
 
-                    System.out.println("tempdis :p1["+i+"] ~ p2["+j+"] : "+tempdis);
                     distance = tempdis;
                     returnPoints[0] = p1[i];
                     returnPoints[1] = p2[j];
@@ -139,72 +114,8 @@ public class MyMindMapPane extends JPanel {
             }
         }
 
-
-        System.out.println("Shoertest Point : "+node1.getText()+"("+returnPoints[0].x + ", "+returnPoints[0].y + ") / "+ node2.getText() + "(" + returnPoints[1].x + ", "+returnPoints[1].y+")");
-
-
         return returnPoints;
     }
-
-
-
-   /* public Point[] getShortestPoint(Node node1, Node node2, int index)
-    {
-        Double distance;
-        Double tempdis;
-        Point [] returnPoints = new Point[2];
-
-        index %= 4;
-
-        Point p11 = new Point(node1.getNodeX(), node1.getNodeY()+node1.getNodeH()/2);
-        Point p12 = new Point(node1.getNodeX()+node1.getNodeW()/2, node1.getNodeY());
-        Point p13 = new Point(node1.getNodeX()+node1.getNodeW(), node1.getNodeY()+node1.getNodeH()/2);
-        Point p14 = new Point(node1.getNodeX()+node1.getNodeW()/2, node1.getNodeY()+node1.getNodeH());
-
-        Point[] p1 = new Point[4];
-        p1[0] = p11;
-        p1[1] = p12;
-        p1[2] = p13;
-        p1[3] = p14;
-
-
-        Point p21 = new Point(node2.getNodeX(), node2.getNodeY()+node2.getNodeH()/2);
-        Point p22 = new Point(node2.getNodeX()+node2.getNodeW()/2, node2.getNodeY());
-        Point p23 = new Point(node2.getNodeX()+node2.getNodeW(), node2.getNodeY()+node2.getNodeH()/2);
-        Point p24 = new Point(node2.getNodeX()+node2.getNodeW()/2, node2.getNodeY()+node2.getNodeH());
-
-        Point[] p2 = new Point[4];
-        p2[0] = p21;
-        p2[1] = p22;
-        p2[2] = p23;
-        p2[3] = p24;
-
-        distance = getDistance(p1[0], p2[0]);
-        returnPoints[0] = p1[0];
-        returnPoints[1] = p2[0];
-
-
-            for (int j=0; j<4; j++) {
-
-                tempdis = getDistance(p1[index], p2[j]);
-
-                if (distance > tempdis){
-
-                    distance = tempdis;
-                    returnPoints[0] = p1[index];
-                    returnPoints[1] = p2[j];
-                }
-
-        }
-        System.out.println("Shoertest Point : "+node1.getText()+"("+returnPoints[0].x + ", "+returnPoints[0].y + ") / "+ node2.getText() + "(" + returnPoints[1].x + ", "+returnPoints[1].y+")");
-
-
-
-
-        return returnPoints;
-    }
-
-*/
 
 
     public Double getDistance(Point p1, Point p2) {
@@ -226,8 +137,6 @@ public class MyMindMapPane extends JPanel {
 
     public void paintComponent(Graphics g) {
 
-        System.out.println("송지원 : MyMindMapPane paintComponent() 호출");
-
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
@@ -239,7 +148,6 @@ public class MyMindMapPane extends JPanel {
             Node curNode;
 
             if (components[i] instanceof Node) {
-
 
                 curNode = (Node)components[i];
 
@@ -257,12 +165,6 @@ public class MyMindMapPane extends JPanel {
                     int h = 10;
 
 
-//                    int x1 = curNode.getNodeX();
-//                    int y1 = curNode.getNodeY();
-//                    int x2 = parentNode.getNodeX();
-//                    int y2 = parentNode.getNodeY();
-//                    int d = 10;
-//                    int h = 10;
 
                     int dx = x2 - x1, dy = y2 - y1;
                     double D = Math.sqrt(dx * dx + dy * dy);
@@ -285,9 +187,6 @@ public class MyMindMapPane extends JPanel {
                 }
             }
         }
-
-//        this.repaint();
-
     }
 
 
@@ -388,7 +287,6 @@ public class MyMindMapPane extends JPanel {
         Point[] shortestPoints;
 
         public MyContainerAdapter(MyMindMapPane myMindMapPane, Graphics g) {
-            System.out.println("송지원 : MyMindMapPane MyContainerAdapter MyContainerAdapter() 호출");
             this.myMindMapPane = myMindMapPane;
             this.g = g;
         }

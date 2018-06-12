@@ -50,65 +50,12 @@ public class Node extends JLabel {
         this.color = color;
 
         this.parent = parent;
-//        this.child = child;
 
-        /*this.addMouseListener(new MouseListener() {
-
-            private int pressedX;
-            private int pressedY;
-
-            private int releasedX;
-            private int releasedY;
-
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-                pressedX = e.getX();
-                pressedY = e.getY();
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-                Node clicked = (Node) e.getSource();
-
-                releasedX = e.getX();
-                releasedY = e.getY();
-
-                int changedX = releasedX - pressedX;
-                int changedY = releasedY - pressedY;
-
-                setLocation(clicked.getNodeX() + changedX, clicked.getNodeY() + changedY);
-
-                clicked.setNodeX(clicked.getNodeX() + changedX);
-                clicked.setNodeY(clicked.getNodeY() + changedY);
-            }
-
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });*/
     }
 
 
     public Node(int id, String text, int x, int y, int w, int h, Color color, int level, Node parent, MyAttributePane myAttributePane) {
         super(text);
-        /*this.setMinimumSize(this.getPreferredSize());*/
         this.setMinimumSize(new Dimension(300, 100));//송지원 이거 적용안되는듯...;;
         this.setForeground(Color.BLACK);
         this.setHorizontalAlignment(CENTER);
@@ -155,7 +102,6 @@ public class Node extends JLabel {
 
     public Node(int id, String text, int x, int y, int w, int h, Color color, int level) {
         super(text);
-        /*this.setMinimumSize(this.getPreferredSize());*/
         this.setMinimumSize(new Dimension(300, 100));//송지원 이거 적용안되는듯...;;
         this.setHorizontalAlignment(CENTER);
 
@@ -225,10 +171,6 @@ public class Node extends JLabel {
         this.parent = parent;
     }
 
-//    public void setChild(Node child) {
-//
-//        this.child = child;
-//    }
 
     public int getId() {
         return id;
@@ -365,46 +307,30 @@ public class Node extends JLabel {
             if (component.getCursor() != Cursor.getDefaultCursor()) {
 
                 pressed_r = true;
-                //System.out.println("송지원 : mousePressed() 호출");
             }
-            //System.out.println("송지원 : mousePressed() 호출 pressed_r : " + pressed_r);
 
 
             pressed_m = true;
             pressedX = e.getX();
             pressedY = e.getY();
-            //System.out.println("송지원 : mousePressed() 호출 pressedX : " + pressedX + " / pressedY : " + pressedY);
 
             pressedComponent = (Node) e.getComponent();
             componentX = pressedComponent.getX();
             componentY = pressedComponent.getY();
             componentW = pressedComponent.getWidth();
             componentH = pressedComponent.getHeight();
-            //System.out.println("송지원 : mousePressed() 호출 componentX : " + componentX + " / componentY : " + componentY + " / componentW : " + componentW + " / componentH : " + componentH);
 
             Rectangle inside = new Rectangle(componentX + 2, componentY + 2, componentW - 4, componentH - 4);
-            //System.out.println("송지원 : mousePressed() 호출 Rectangle inside (" + (componentX + 2) + ", " + (componentY + 2) + ", " + (componentW - 4) + ", " + (componentH - 4));
-           /* atInside = inside.contains(e.getPoint());
-            System.out.println("\n송지원 : mousePressed() 호출 e.getPoint: " + e.getPoint().x +"/ "+ e.getPoint().y + "\n");*/
 
             atInside = inside.contains(e.getLocationOnScreen());
             atInside = inside.contains(new Point(componentX + e.getX(), componentY + e.getY()));
-            //System.out.println("\n송지원 : mousePressed() 호출 e.getPoint: " + e.getPoint().x + "/ " + e.getPoint().y + "\n");
-
-            //System.out.println("송지원 : mousePressed() 호출 pressed_r : " + pressed_r + " / atInside : " + atInside);
-
         }
 
 
         @Override
         public void mouseReleased(MouseEvent e) {
 
-//            //System.out.println("송지원 : mouseReleased() 호출 pressed_r : " + pressed_r);
             pressed_r = false;
-//            //System.out.println("송지원 : mouseReleased() 호출 pressed_r : " + pressed_r);
-
-
-            //System.out.println("송지원 : mouseReleased() 호출 pressed_m : " + pressed_m + " / atInside : " + atInside);
 
             if (atInside == true) {
 
@@ -441,12 +367,8 @@ public class Node extends JLabel {
         @Override
         public void mouseDragged(MouseEvent e) {
 
-//            System.out.println("송지원 : mouseDragged() 호출 pressed_r :" + pressed_r);
-
             if (pressed_r) {
-//                System.out.println("송지원 : mouseDragged() 호출2");
 
-//                Point p = e.getPoint();
                 Point p = getParent().getMousePosition();
 
                 int type = component.getCursor().getType();
@@ -456,16 +378,10 @@ public class Node extends JLabel {
                 int newWidth;
                 int newHeight;
 
-//                System.out.println("송지원 : mouseDragged() 호출2.5 type :" + type);
                 switch (type) {
 
                     case Cursor.W_RESIZE_CURSOR:
                         System.out.println("송지원 : mouseDragged() 호출3 : Cursor.W_RESIZE_CURSOR");
-//                        nodeX = p.x;
-//                        nodeW = nodeW - dx;
-//                        component.setLocation(new Point(nodeX, nodeY));
-//                        component.setSize(new Dimension(nodeW, nodeH));
-//                        break;
                         dx = p.x - nodeX;
                         dy = 0;
                         System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
@@ -479,11 +395,6 @@ public class Node extends JLabel {
 
                     case Cursor.N_RESIZE_CURSOR:
                         System.out.println("송지원 : mouseDragged() 호출3 : Cursor.N_RESIZE_CURSOR");
-//                        nodeY = nodeY + dy;
-//                        nodeH = nodeH - dy;
-//                        component.setLocation(new Point(nodeX, nodeY));
-//                        component.setSize(new Dimension(nodeW, nodeH));
-//                        break;
                         dx = 0;
                         dy = p.y - nodeY;
                         System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
@@ -496,11 +407,6 @@ public class Node extends JLabel {
 
 
                     case Cursor.E_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.E_RESIZE_CURSOR");
-//                        nodeW = nodeW + dx;
-//                        component.setLocation(new Point(nodeX, nodeY));
-//                        component.setSize(new Dimension(nodeW, nodeH));
-//                        break;
                         dx = p.x - (nodeX + nodeW);
                         dy = 0;
                         System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
@@ -513,10 +419,6 @@ public class Node extends JLabel {
 
                     case Cursor.S_RESIZE_CURSOR:
                         System.out.println("송지원 : mouseDragged() 호출3 : Cursor.S_RESIZE_CURSOR");
-//                        nodeH = nodeH + dy;
-//                        component.setLocation(new Point(nodeX, nodeY));
-//                        component.setSize(new Dimension(nodeW, nodeH));
-//                        break;
                         dx = 0;
                         dy = p.y - (nodeY + nodeH);
                         System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
@@ -530,10 +432,6 @@ public class Node extends JLabel {
 
                     case Cursor.NW_RESIZE_CURSOR:
                         System.out.println("송지원 : mouseDragged() 호출3 : Cursor.NW_RESIZE_CURSOR");
-//                        nodeX = nodeX + dx;
-//                        nodeY = nodeY + dy;
-//                        nodeW = nodeW - dx;
-//                        nodeH = nodeH - dy;
                         dx = p.x - nodeX;
                         dy = p.y - nodeY;
                         System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
@@ -546,9 +444,6 @@ public class Node extends JLabel {
 
                     case Cursor.NE_RESIZE_CURSOR:
                         System.out.println("송지원 : mouseDragged() 호출3 : Cursor.NE_RESIZE_CURSOR");
-//                        nodeY = nodeY + dy;
-//                        nodeW = nodeW + dx;
-//                        nodeH = nodeH - dy;
                         dx = p.x - (nodeX + nodeW);
                         dy = p.y - nodeY;
                         System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
@@ -561,8 +456,6 @@ public class Node extends JLabel {
 
                     case Cursor.SE_RESIZE_CURSOR:
                         System.out.println("송지원 : mouseDragged() 호출3 : Cursor.SE_RESIZE_CURSOR");
-//                        nodeW = nodeW + dx;
-//                        nodeH = nodeH + dy;
                         dx = p.x - (nodeX + nodeW);
                         dy = p.y - (nodeY + nodeH);
                         System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
@@ -576,9 +469,6 @@ public class Node extends JLabel {
                     case Cursor.SW_RESIZE_CURSOR:
 
                         System.out.println("송지원 : mouseDragged() 호출3 : Cursor.SW_RESIZE_CURSOR");
-//                        nodeX = nodeX + dx;
-//                        nodeW = nodeW - dx;
-//                        nodeH = nodeH + dy;
                         dx = p.x - nodeX;
                         dy = p.y - (nodeY + nodeH);
                         System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
@@ -602,15 +492,12 @@ public class Node extends JLabel {
         @Override
         public void mouseMoved(MouseEvent e) {
 
-//            System.out.println("송지원 : mouseMoved() 호출1");
-
             Point p = e.getPoint();
             //Point p = e.getLocationOnScreen();
             Point p2 = getParent().getMousePosition();
 
             if (!isOverNode(p)) {
 
-//                System.out.println("송지원 : mouseMoved() 호출2 : isOverNode is true");
                 if (component.getCursor() != Cursor.getDefaultCursor()) {
 
                     component.setCursor(Cursor.getDefaultCursor());
@@ -620,7 +507,6 @@ public class Node extends JLabel {
 
 
             int outcode = getOutcode(p);
-//            System.out.println("송지원 : mouseMoved() 호출3 outcode :" + outcode);
 
             switch (outcode) {
 
@@ -706,30 +592,25 @@ public class Node extends JLabel {
             Boolean isInsideOfInner = false;
 
             Rectangle inner = new Rectangle(x + 2, y + 2, w - 4, h - 4);
-//            System.out.println("@@@@@@@@@@@@@@@@@@송지원 : mouseEntered() 호출 " + (x + 2) + " " + (y + 2) + " " + (w - 4) + " " + (h - 4));
             Rectangle outter = new Rectangle(x - 2, y - 2, w + 4, h + 4);
-//            System.out.println("@@@@@@@@@@@@@@@@@@송지원 : mouseEntered() 호출 " + (x - 2) + " " + (y - 2) + " " + (w + 4) + " " + (h + 4));
 
             isInsideOfInner = inner.contains(point);
             isInsideOfUpper = outter.contains(point);
-//            System.out.println("@@@@@@@@@@@@@@@@@@송지원 : mouseEntered() 호출 isInsideOfInner :" + isInsideOfInner.toString());
-//            System.out.println("@@@@@@@@@@@@@@@@@@송지원 : mouseEntered() 호출 isInsideOfOUttet :" + isInsideOfUpper.toString());
 
             if (isInsideOfInner == false && isInsideOfUpper == true) {
                 atLine = true;
                 atInside = false;
-//                System.out.println("!!!!!!!!!!!!!!송지원 : mouseEntered() 호출 atline : true");
-            } else {
+            }
+            else {
                 atLine = false;
-//                System.out.println("!!!!!!!!!!!!송지원 : mouseEntered() 호출 atline : false");
             }
 
 
             if (isInsideOfInner == true) {
                 atInside = true;
                 atLine = false;
-//                System.out.println("송지원송지원송지원송지원 : mouseEntered() 호출 isInside : true");
-            } else {
+            }
+            else {
                 atInside = false;
             }
 
@@ -738,9 +619,8 @@ public class Node extends JLabel {
 
 
         private boolean isOverNode(Point p) {
-//            System.out.println("송지원 : isOverNode() 호출 ");
+
             Node n = component;
-//            System.out.println("송지원 : isOverNode() 호출 n.contains(p) :" + n.contains(p));
             return n.contains(p);
         }
 

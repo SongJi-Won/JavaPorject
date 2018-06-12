@@ -75,7 +75,6 @@ public class MyTextEditorPane extends JPanel {
 //            myMindMapPane.setVisible(true);
 
             double d;
-            System.out.println("!!!!!! centerX :"+centerX+"   / centerY :"+centerY);
 
 
 
