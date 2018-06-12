@@ -25,6 +25,19 @@ public class JSplitPaneTest extends JFrame {
     private JMenuItem changeMenuItem;
 
 
+    private ToolBarListener toolBarListener;
+
+    private JToolBar jToolBar;
+    private JButton newToolBtn;
+    private JButton openToolBtn;
+    private JButton saveToolBtn;
+    private JButton anotherNameSaveToolBtn;
+    private JButton closeToolBtn;
+    private JButton applyToolBtn;
+    private JButton changeToolBtn;
+
+
+
 
 
     public JSplitPaneTest() {
@@ -40,6 +53,8 @@ public class JSplitPaneTest extends JFrame {
         splitPaneMouseListener = new SplitPaneMouseListener();
 
         menuListener = new MenuListener();
+
+        toolBarListener = new ToolBarListener();
 
         Node forError = new Node(0, "", 0, 0, 0, 0, Color.white, 0, null, this, myAttributePane);
 
@@ -79,7 +94,7 @@ public class JSplitPaneTest extends JFrame {
 
         jMenuBar = new JMenuBar();
 
-        jMenu = new JMenu("File");
+        jMenu = new JMenu("Menu Bar");
         jMenuBar.add(jMenu);
 
         newMenuItem = new JMenuItem("new");
@@ -109,7 +124,38 @@ public class JSplitPaneTest extends JFrame {
         jMenuBar.add(jMenu);
         setJMenuBar(jMenuBar);
 
-        add(jSplitPane2);
+
+        jToolBar = new JToolBar("Tool Bar");
+
+        newToolBtn = new JButton("new");
+        openToolBtn = new JButton("open");
+        saveToolBtn = new JButton("save");
+        anotherNameSaveToolBtn = new JButton("save to another name");
+        closeToolBtn = new JButton("close");
+        applyToolBtn = new JButton("apply");
+        changeToolBtn = new JButton("change");
+
+        newToolBtn.addActionListener(toolBarListener);
+        openToolBtn.addActionListener(toolBarListener);
+        saveToolBtn.addActionListener(toolBarListener);
+        anotherNameSaveToolBtn.addActionListener(toolBarListener);
+        closeToolBtn.addActionListener(toolBarListener);
+        applyToolBtn.addActionListener(toolBarListener);
+        changeToolBtn.addActionListener(toolBarListener);
+
+        jToolBar.add(newToolBtn);
+        jToolBar.add(openToolBtn);
+        jToolBar.add(saveToolBtn);
+        jToolBar.add(anotherNameSaveToolBtn);
+        jToolBar.add(closeToolBtn);
+        jToolBar.add(applyToolBtn);
+        jToolBar.add(changeToolBtn);
+
+
+        this.setLayout(new BorderLayout());
+
+        this.add(jToolBar, "North");
+        this.add(jSplitPane2, "Center");
         setSize(1400, 800);
         setVisible(true);
 
@@ -256,5 +302,56 @@ public class JSplitPaneTest extends JFrame {
         }
 
 
+    }
+
+
+    class ToolBarListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            if (e.getSource() == newToolBtn) {
+
+                //새로 만들기 하는 코드
+            }
+            else if (e.getSource() == openToolBtn) {
+
+                //저장했던 파일 열기 하는 코드
+            }
+            else if (e.getSource() == saveToolBtn) {
+
+                //저장하는 코드
+            }
+            else if (e.getSource() == anotherNameSaveToolBtn) {
+
+                //다른 이름으로 저장하는 코드
+            }
+            else if (e.getSource() == closeToolBtn) {
+
+                System.exit(0);
+            }
+            else if (e.getSource() == applyToolBtn) {
+
+                //적용하는 코드
+                if (myTextEditorPane != null) {
+
+                    if (myTextEditorPane.getApplyBtn() != null) {
+
+                        myTextEditorPane.getApplyBtn().doClick();
+                    }
+                }
+            } else if (e.getSource() == changeToolBtn) {
+
+                //속성 페인 내용을 화면에 적용하는 코드
+                if (myAttributePane != null) {
+
+                    if (myAttributePane.getChangeBtn() != null) {
+
+                        myAttributePane.getChangeBtn().doClick();
+                    }
+                }
+            }
+
+        }
     }
 }
