@@ -15,16 +15,9 @@ public class JSplitPaneTest extends JFrame {
     {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
-
-
        myMindMapPane = new MyMindMapPane();
-
        myAttributePane = new MyAttributePane();
        myTextEditorPane = new MyTextEditorPane(myMindMapPane, myAttributePane);
-
-
-
 
 
        //20180610 작업분
@@ -36,12 +29,11 @@ public class JSplitPaneTest extends JFrame {
         Node newNode3 = new Node(0, "Node3", 200, 50, 300, 100, Color.yellow, 0, myAttributePane);
         Node newNode4 = new Node(0, "", 0, 0, 0, 0, Color.white, 0, myAttributePane);
 
-//        Node newNode4 = new Node(0, "Node4", 700, 100, 300, 100, Color.gray, 0);
 
-      /*  newNode1.addFocusListener(myFocusListener);
-        newNode2.addFocusListener(myFocusListener);
-        newNode3.addFocusListener(myFocusListener);
-        newNode4.addFocusListener(myFocusListener);*/
+//      /*  newNode1.addFocusListener(myFocusListener);
+//        newNode2.addFocusListener(myFocusListener);
+//        newNode3.addFocusListener(myFocusListener);
+//        newNode4.addFocusListener(myFocusListener);*/
 
         myMindMapPane.addNode(newNode1);
         myMindMapPane.addNode(newNode2);
@@ -78,7 +70,6 @@ public class JSplitPaneTest extends JFrame {
         jSplitPane1.setResizeWeight(0.99);
         jSplitPane1.setLeftComponent(jScrollMindMap);
         jSplitPane1.setRightComponent(jScrollAttribute);
-       // jSplitPane1.addMouseListener(splitPaneMouseListener);
 
 
         JSplitPane jSplitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollTextArea, jSplitPane1);
@@ -86,16 +77,12 @@ public class JSplitPaneTest extends JFrame {
         jSplitPane2.setLeftComponent(jScrollTextArea);
         jSplitPane2.setRightComponent(jSplitPane1);
 
-//        jSplitPane2.setResizeWeight(0.8);
-//        jSplitPane2.setDividerLocation(0.8);
-
 
         add(jSplitPane2);
         setSize(1400, 800);
         setVisible(true);
 
 
-//        pack();
 
     }
 
@@ -105,53 +92,53 @@ public class JSplitPaneTest extends JFrame {
     }
 
 
-    /*class MyFocusListener implements FocusListener {
-
-        private MyAttribute text;
-        private MyAttribute x;
-        private MyAttribute y;
-        private MyAttribute w;
-        private MyAttribute h;
-        private MyAttribute color;
-
-        public MyFocusListener ()
-        {
-            this.text = myAttributePane.getTextAttribute();
-            this.x = myAttributePane.getXAttribute();
-            this.y = myAttributePane.getYAttribute();
-            this.w = myAttributePane.getWAttribute();
-            this.h = myAttributePane.getHAttribute();
-            this.color = myAttributePane.getColorAttribute();
-        }
-
-        @Override
-        public void focusGained(FocusEvent e) {
-
-            System.out.println("송지원 : focusGained() 호출됨");;
-
-            if (e.getSource() instanceof  Node){
-
-                Node focusgaindedNode = (Node)e.getSource();
-
-                this.text.setAttrValue(focusgaindedNode.getText());
-                System.out.println("송지원 : focusGained() 호출됨 / getText() :" + focusgaindedNode.getText());;
-                this.x.setAttrValue(""+focusgaindedNode.getNodeX());
-                System.out.println("송지원 : focusGained() 호출됨 / getNodeX() :" + focusgaindedNode.getNodeX());;
-                this.y.setAttrValue(""+focusgaindedNode.getNodeY());
-                System.out.println("송지원 : focusGained() 호출됨 / getNodeY() :" + focusgaindedNode.getNodeY());;
-                this.w.setAttrValue(""+focusgaindedNode.getNodeW());
-                System.out.println("송지원 : focusGained() 호출됨 / getNodeW() :" + focusgaindedNode.getNodeW());;
-                this.h.setAttrValue(""+focusgaindedNode.getNodeH());
-                System.out.println("송지원 : focusGained() 호출됨 / getNodeH() : " + focusgaindedNode.getNodeH());;
-            }
-
-        }
-
-        @Override
-        public void focusLost(FocusEvent e) {
-
-        }
-    }*/
+//    class MyFocusListener implements FocusListener {
+//
+//        private MyAttribute text;
+//        private MyAttribute x;
+//        private MyAttribute y;
+//        private MyAttribute w;
+//        private MyAttribute h;
+//        private MyAttribute color;
+//
+//        public MyFocusListener ()
+//        {
+//            this.text = myAttributePane.getTextAttribute();
+//            this.x = myAttributePane.getXAttribute();
+//            this.y = myAttributePane.getYAttribute();
+//            this.w = myAttributePane.getWAttribute();
+//            this.h = myAttributePane.getHAttribute();
+//            this.color = myAttributePane.getColorAttribute();
+//        }
+//
+//        @Override
+//        public void focusGained(FocusEvent e) {
+//
+//            System.out.println("송지원 : focusGained() 호출됨");;
+//
+//            if (e.getSource() instanceof  Node){
+//
+//                Node focusgaindedNode = (Node)e.getSource();
+//
+//                this.text.setAttrValue(focusgaindedNode.getText());
+//                System.out.println("송지원 : focusGained() 호출됨 / getText() :" + focusgaindedNode.getText());;
+//                this.x.setAttrValue(""+focusgaindedNode.getNodeX());
+//                System.out.println("송지원 : focusGained() 호출됨 / getNodeX() :" + focusgaindedNode.getNodeX());;
+//                this.y.setAttrValue(""+focusgaindedNode.getNodeY());
+//                System.out.println("송지원 : focusGained() 호출됨 / getNodeY() :" + focusgaindedNode.getNodeY());;
+//                this.w.setAttrValue(""+focusgaindedNode.getNodeW());
+//                System.out.println("송지원 : focusGained() 호출됨 / getNodeW() :" + focusgaindedNode.getNodeW());;
+//                this.h.setAttrValue(""+focusgaindedNode.getNodeH());
+//                System.out.println("송지원 : focusGained() 호출됨 / getNodeH() : " + focusgaindedNode.getNodeH());;
+//            }
+//
+//        }
+//
+//        @Override
+//        public void focusLost(FocusEvent e) {
+//
+//        }
+//    }
 
 
     public MyTextEditorPane getMyTextEditorPane() {

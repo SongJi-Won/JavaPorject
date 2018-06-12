@@ -48,15 +48,19 @@ public class MyTextEditorPane extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
 
-            //System.out.print(textArea.getText());
             String input = textArea.getText();
             parseToTree(input);
+            Node newNode = new Node(4, "테스트", 100, 200, 300, 100, Color.pink, 0, myAttributePane);
+            myMindMapPane.addNode(newNode);
+            myMindMapPane.repaint();
 
         }
     }
 
     public void parseToTree(String str) {
 
+
+        String[] input;
         String temp[] = new String[40];
         String parent[] = new String[40];
         int levelArr[] = new int[40];
@@ -64,7 +68,10 @@ public class MyTextEditorPane extends JPanel {
         int level;
         int tempNum;
 
-        for (int i = 0; i < 20; i++) {
+       input = str.split("\n");
+       //System.out.println(input.length);
+
+        for (int i = 0; i < input.length; i++) {
             tempNum = i; // 혹시 몰라서 쓰는 복사용 수
 
             if (i == 0) {
@@ -95,9 +102,9 @@ public class MyTextEditorPane extends JPanel {
 
 
             }
-
+            Node newNode = new Node(5, temp[i], 100, 200, 300, 100, Color.pink, level, myAttributePane);
+            myMindMapPane.addNode(newNode);
             System.out.println("텍스트 : " + tempStr + " 레벨 : " + level + " 부모 : " + parent[i]);
-            // System.out.println(i);
         }
 
 
