@@ -23,7 +23,7 @@ public class Node extends JLabel {
 
 
     Node parent;
-    Node child;
+//    Node child;
 
 
 
@@ -47,10 +47,10 @@ public class Node extends JLabel {
         this.level = level;
 
         //this.color = 레벨에 따른 다른 색상 넣기
-        this.color = Color.cyan;
+        this.color = color;
 
         this.parent = parent;
-        this.child = child;
+//        this.child = child;
 
         /*this.addMouseListener(new MouseListener() {
 
@@ -106,7 +106,7 @@ public class Node extends JLabel {
     }
 
 
-    public Node(int id, String text, int x, int y, int w, int h, Color color, int level, MyAttributePane myAttributePane) {
+    public Node(int id, String text, int x, int y, int w, int h, Color color, int level, Node parent, MyAttributePane myAttributePane) {
         super(text);
         /*this.setMinimumSize(this.getPreferredSize());*/
         this.setMinimumSize(new Dimension(300, 100));//송지원 이거 적용안되는듯...;;
@@ -132,6 +132,8 @@ public class Node extends JLabel {
         this.setBackground(this.color);
 
         this.level = level;
+
+        this.parent = parent;
 
         this.parentAttributePane = myAttributePane;
 
@@ -223,10 +225,10 @@ public class Node extends JLabel {
         this.parent = parent;
     }
 
-    public void setChild(Node child) {
-
-        this.child = child;
-    }
+//    public void setChild(Node child) {
+//
+//        this.child = child;
+//    }
 
     public int getId() {
         return id;
@@ -265,6 +267,8 @@ public class Node extends JLabel {
     public Color getColor() {
         return color;
     }
+
+    public Node getParentNode() { return parent; }
 
 
 
@@ -361,33 +365,33 @@ public class Node extends JLabel {
             if (component.getCursor() != Cursor.getDefaultCursor()) {
 
                 pressed_r = true;
-//                System.out.println("송지원 : mousePressed() 호출");
+                //System.out.println("송지원 : mousePressed() 호출");
             }
-//            System.out.println("송지원 : mousePressed() 호출 pressed_r : " + pressed_r);
+            //System.out.println("송지원 : mousePressed() 호출 pressed_r : " + pressed_r);
 
 
             pressed_m = true;
             pressedX = e.getX();
             pressedY = e.getY();
-            System.out.println("송지원 : mousePressed() 호출 pressedX : " + pressedX + " / pressedY : " + pressedY);
+            //System.out.println("송지원 : mousePressed() 호출 pressedX : " + pressedX + " / pressedY : " + pressedY);
 
             pressedComponent = (Node) e.getComponent();
             componentX = pressedComponent.getX();
             componentY = pressedComponent.getY();
             componentW = pressedComponent.getWidth();
             componentH = pressedComponent.getHeight();
-            System.out.println("송지원 : mousePressed() 호출 componentX : " + componentX + " / componentY : " + componentY + " / componentW : " + componentW + " / componentH : " + componentH);
+            //System.out.println("송지원 : mousePressed() 호출 componentX : " + componentX + " / componentY : " + componentY + " / componentW : " + componentW + " / componentH : " + componentH);
 
             Rectangle inside = new Rectangle(componentX + 2, componentY + 2, componentW - 4, componentH - 4);
-            System.out.println("송지원 : mousePressed() 호출 Rectangle inside (" + (componentX + 2) + ", " + (componentY + 2) + ", " + (componentW - 4) + ", " + (componentH - 4));
+            //System.out.println("송지원 : mousePressed() 호출 Rectangle inside (" + (componentX + 2) + ", " + (componentY + 2) + ", " + (componentW - 4) + ", " + (componentH - 4));
            /* atInside = inside.contains(e.getPoint());
             System.out.println("\n송지원 : mousePressed() 호출 e.getPoint: " + e.getPoint().x +"/ "+ e.getPoint().y + "\n");*/
 
             atInside = inside.contains(e.getLocationOnScreen());
             atInside = inside.contains(new Point(componentX + e.getX(), componentY + e.getY()));
-            System.out.println("\n송지원 : mousePressed() 호출 e.getPoint: " + e.getPoint().x + "/ " + e.getPoint().y + "\n");
+            //System.out.println("\n송지원 : mousePressed() 호출 e.getPoint: " + e.getPoint().x + "/ " + e.getPoint().y + "\n");
 
-            System.out.println("송지원 : mousePressed() 호출 pressed_r : " + pressed_r + " / atInside : " + atInside);
+            //System.out.println("송지원 : mousePressed() 호출 pressed_r : " + pressed_r + " / atInside : " + atInside);
 
         }
 
@@ -395,12 +399,12 @@ public class Node extends JLabel {
         @Override
         public void mouseReleased(MouseEvent e) {
 
-//            System.out.println("송지원 : mouseReleased() 호출 pressed_r : " + pressed_r);
+//            //System.out.println("송지원 : mouseReleased() 호출 pressed_r : " + pressed_r);
             pressed_r = false;
-//            System.out.println("송지원 : mouseReleased() 호출 pressed_r : " + pressed_r);
+//            //System.out.println("송지원 : mouseReleased() 호출 pressed_r : " + pressed_r);
 
 
-            System.out.println("송지원 : mouseReleased() 호출 pressed_m : " + pressed_m + " / atInside : " + atInside);
+            //System.out.println("송지원 : mouseReleased() 호출 pressed_m : " + pressed_m + " / atInside : " + atInside);
 
             if (atInside == true) {
 
@@ -745,19 +749,12 @@ public class Node extends JLabel {
 
             Point p2 = getParent().getMousePosition();
 
-//            System.out.println("\n\t!#@$!@#$!@#$!@#$송지원 : getOutcode() 호출 p2.x:" + p2.x + " p2.y" + p2.y);
-
-//            System.out.println("\n\t!#@$!@#$!@#$!@#$송지원 : getOutcode() 호출 p.x:" + p.x + " p.y" + p.y);
-//            System.out.println("\t!#@$!@#$!@#$!@#$송지원 : getOutcode() 호출 point.x:" + point.x + " point.y" + point.y);
-//            System.out.println("\t!#@$!@#$!@#$!@#$송지원 : getOutcode() 호출 dimention.w:" + dimension.width + " / dimetion.h:" + dimension.height);
 
             Rectangle r = new Rectangle(component.getPoint(), component.getDimension());
 
-//            System.out.println("\n\t%^*%^*%^*%^*%^*%^*%^*송지원 : getOutcode() 호출 r.x:" + r.x + " / r.y:" + r.y + " / r.w:" + r.width + " / r.h:" + r.height);
 
             r.grow(-PROX_DIST, -PROX_DIST);
 
-//            System.out.println("\t!#@$!@#$!@#$!@#$송지원 : getOutcode() 호출 r.outcode((double)p.x, (double)p.y): " + r.outcode((double) p.x, (double) p.y) + "\n");
             return r.outcode((double) p2.x, (double) p2.y);
         }
     }

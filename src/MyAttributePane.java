@@ -18,11 +18,14 @@ public class MyAttributePane extends JPanel {
 
     private JButton changeBtn;
 
-
+    private JSplitPaneTest jSplitPaneTest;
     private Node selectedNode;
 
-    public MyAttributePane()
+    public MyAttributePane(JSplitPaneTest jSplitPaneTest)
     {
+        this.jSplitPaneTest = jSplitPaneTest;
+
+
         title = new JLabel("Attribute Pane");
 
         text = new MyAttribute("   TEXT", "None", false);
@@ -58,7 +61,7 @@ public class MyAttributePane extends JPanel {
 
 
 
-            System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출 ");
+            //System.out.println("\n\n\n\n\n\n\n\n\n송지원 : MyAttributePane actionPerformed() 호출 ");
 
             Pattern p = Pattern.compile("[0-9|a-f|A-F][0-9|a-f|A-F][0-9|a-f|A-F][0-9|a-f|A-F][0-9|a-f|A-F][0-9|a-f|A-F]");
             int red;
@@ -146,7 +149,7 @@ public class MyAttributePane extends JPanel {
 
 
     public void setSelectedNode(Node selectedNode) {
-        System.out.println("\n\n\n\n\n\n\n\n\n\t\t\t송지원 : MyAttributePane selectedNode() 호출  :"+selectedNode.getText());
+        //System.out.println("\n\n\n\n\n\n\n\n\n\t\t\t송지원 : MyAttributePane selectedNode() 호출  :"+selectedNode.getText());
         this.selectedNode = selectedNode;
     }
 }

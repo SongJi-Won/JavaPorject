@@ -8,50 +8,30 @@ public class JSplitPaneTest extends JFrame {
     private MyMindMapPane myMindMapPane;
     private MyAttributePane myAttributePane;
 
-   /* private MyFocusListener myFocusListener;*/
     private SplitPaneMouseListener splitPaneMouseListener;
+
+    private Node clickedNode;
+
 
     public JSplitPaneTest()
     {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        myMindMapPane = new MyMindMapPane();
+        myAttributePane = new MyAttributePane(this);
+        myTextEditorPane = new MyTextEditorPane(myMindMapPane, myAttributePane, this.getWidth()/2, this.getHeight()/2);
+//        myTextEditorPane = new MyTextEditorPane(myMindMapPane, myAttributePane, 500, 500);
 
-       myMindMapPane = new MyMindMapPane();
+        this.clickedNode = null;
 
-        myAttributePane = new MyAttributePane();
-
-        myTextEditorPane = new MyTextEditorPane(myMindMapPane, myAttributePane);
-
-
-
-
-
-       //20180610 작업분
-        /*myFocusListener = new MyFocusListener();*/
         splitPaneMouseListener = new SplitPaneMouseListener();
 
-        Node newNode1 = new Node(0, "Node1", 100, 200, 300, 100, Color.pink, 0, myAttributePane);
-        Node newNode2 = new Node(0, "Node2", 400, 300, 300, 100, Color.blue, 0, myAttributePane);
-        Node newNode3 = new Node(0, "Node3", 200, 50, 300, 100, Color.yellow, 0, myAttributePane);
-        Node newNode4 = new Node(0, "", 0, 0, 0, 0, Color.white, 0, myAttributePane);
+        Node forError = new Node(0, "", 0, 0, 0, 0, Color.white, 0, null, myAttributePane);
 
-      /*  newNode1.addFocusListener(myFocusListener);
-        newNode2.addFocusListener(myFocusListener);
-        newNode3.addFocusListener(myFocusListener);
-        newNode4.addFocusListener(myFocusListener);*/
-
-        myMindMapPane.addNode(newNode1);
-        myMindMapPane.addNode(newNode2);
-        myMindMapPane.addNode(newNode3);
-        myMindMapPane.addNode(newNode4);
-        myMindMapPane.remove(newNode4);
+        myMindMapPane.addNode(forError);
+        myMindMapPane.remove(forError);
 
         myMindMapPane.addMouseListener(splitPaneMouseListener);
-
-
-
-
-
 
 
 
@@ -66,36 +46,10 @@ public class JSplitPaneTest extends JFrame {
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 
-
-
-      /*  JSplitPane jSplitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollMindMap, jScrollAttribute);
-        jSplitPane1.setOneTouchExpandable(true);
-
-        jSplitPane1.setDividerSize(3);
-        jSplitPane1.setContinuousLayout(false);
-        jSplitPane1.setLeftComponent(jScrollMindMap);
-        jSplitPane1.setRightComponent(jScrollAttribute);
-
-        jSplitPane1.setDividerLocation(0.6);
-
-
-        JSplitPane jSplitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollTextArea, jSplitPane1);
-        jSplitPane2.setOneTouchExpandable(true);
-
-        jSplitPane2.setDividerSize(3);
-        jSplitPane2.setContinuousLayout(false);
-
-        jSplitPane2.setLeftComponent(jScrollTextArea);
-        jSplitPane2.setRightComponent(jSplitPane1);
-
-        jSplitPane2.setResizeWeight(0.8);
-        jSplitPane2.setDividerLocation(0.8);*/
-
         JSplitPane jSplitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollMindMap, jScrollAttribute);
         jSplitPane1.setResizeWeight(0.99);
         jSplitPane1.setLeftComponent(jScrollMindMap);
         jSplitPane1.setRightComponent(jScrollAttribute);
-       // jSplitPane1.addMouseListener(splitPaneMouseListener);
 
 
         JSplitPane jSplitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollTextArea, jSplitPane1);
@@ -103,16 +57,10 @@ public class JSplitPaneTest extends JFrame {
         jSplitPane2.setLeftComponent(jScrollTextArea);
         jSplitPane2.setRightComponent(jSplitPane1);
 
-//        jSplitPane2.setResizeWeight(0.8);
-//        jSplitPane2.setDividerLocation(0.8);
-
 
         add(jSplitPane2);
-        setSize(1600, 1000);
+        setSize(1400, 800);
         setVisible(true);
-
-
-//        pack();
 
     }
 
@@ -122,53 +70,6 @@ public class JSplitPaneTest extends JFrame {
     }
 
 
-    /*class MyFocusListener implements FocusListener {
-
-        private MyAttribute text;
-        private MyAttribute x;
-        private MyAttribute y;
-        private MyAttribute w;
-        private MyAttribute h;
-        private MyAttribute color;
-
-        public MyFocusListener ()
-        {
-            this.text = myAttributePane.getTextAttribute();
-            this.x = myAttributePane.getXAttribute();
-            this.y = myAttributePane.getYAttribute();
-            this.w = myAttributePane.getWAttribute();
-            this.h = myAttributePane.getHAttribute();
-            this.color = myAttributePane.getColorAttribute();
-        }
-
-        @Override
-        public void focusGained(FocusEvent e) {
-
-            System.out.println("송지원 : focusGained() 호출됨");;
-
-            if (e.getSource() instanceof  Node){
-
-                Node focusgaindedNode = (Node)e.getSource();
-
-                this.text.setAttrValue(focusgaindedNode.getText());
-                System.out.println("송지원 : focusGained() 호출됨 / getText() :" + focusgaindedNode.getText());;
-                this.x.setAttrValue(""+focusgaindedNode.getNodeX());
-                System.out.println("송지원 : focusGained() 호출됨 / getNodeX() :" + focusgaindedNode.getNodeX());;
-                this.y.setAttrValue(""+focusgaindedNode.getNodeY());
-                System.out.println("송지원 : focusGained() 호출됨 / getNodeY() :" + focusgaindedNode.getNodeY());;
-                this.w.setAttrValue(""+focusgaindedNode.getNodeW());
-                System.out.println("송지원 : focusGained() 호출됨 / getNodeW() :" + focusgaindedNode.getNodeW());;
-                this.h.setAttrValue(""+focusgaindedNode.getNodeH());
-                System.out.println("송지원 : focusGained() 호출됨 / getNodeH() : " + focusgaindedNode.getNodeH());;
-            }
-
-        }
-
-        @Override
-        public void focusLost(FocusEvent e) {
-
-        }
-    }*/
 
 
     public MyTextEditorPane getMyTextEditorPane() {
@@ -183,8 +84,13 @@ public class JSplitPaneTest extends JFrame {
         return myAttributePane;
     }
 
+    public Node getClickedNode() {
+        return clickedNode;
+    }
 
-
+    public void setClickedNode(Node clickedNode) {
+        this.clickedNode = clickedNode;
+    }
 
 
 
@@ -205,8 +111,8 @@ public class JSplitPaneTest extends JFrame {
 
             if (e.getSource() instanceof Node) {
 
-                System.out.println("\n\n\n\n\n\n\n\n\n송지원 : SplitPaneMouseListener mouseClicked() Node 클릭");
                 Node clickedNode = (Node)e.getSource();
+                setClickedNode(clickedNode);
 
                 myAttributePane.setSelectedNode(clickedNode);
 
@@ -230,6 +136,8 @@ public class JSplitPaneTest extends JFrame {
         @Override
         public void mousePressed(MouseEvent e) {
             System.out.println("\n\n\n\n\n\n\n\n\n송지원 : SplitPaneMouseListener mousePressed() 호출");
+            Node clickedNode = (Node)e.getSource();
+            setClickedNode(clickedNode);
         }
 
         @Override
@@ -272,67 +180,6 @@ public class JSplitPaneTest extends JFrame {
 
 
 
-        public Point[] getShortestPoint(Node node1, Node node2)
-        {
-            Double distance;
-            Double tempdis;
-            Point [] returnPoints = new Point[2];
 
-            Point p11 = new Point(node1.getNodeX(), node1.getNodeY()+node1.getNodeH()/2);
-            Point p12 = new Point(node1.getNodeX()+node1.getNodeW()/2, node1.getNodeY());
-            Point p13 = new Point(node1.getNodeX()+node1.getNodeW(), node1.getNodeY()+node1.getNodeH()/2);
-            Point p14 = new Point(node1.getNodeX()+node1.getNodeW()/2, node1.getNodeY()+node1.getNodeH());
-
-            Point[] p1 = new Point[4];
-            p1[0] = p11;
-            p1[1] = p12;
-            p1[2] = p13;
-            p1[3] = p14;
-
-
-            Point p21 = new Point(node2.getNodeX(), node2.getNodeY()+node2.getNodeH()/2);
-            Point p22 = new Point(node2.getNodeX()+node2.getNodeW()/2, node2.getNodeY());
-            Point p23 = new Point(node2.getNodeX()+node2.getNodeW(), node2.getNodeY()+node2.getNodeH()/2);
-            Point p24 = new Point(node2.getNodeX()+node2.getNodeW()/2, node2.getNodeY()+node2.getNodeH());
-
-            Point[] p2 = new Point[4];
-            p2[0] = p21;
-            p2[1] = p22;
-            p2[2] = p23;
-            p2[3] = p24;
-
-            distance = getDistance(p1[0], p2[0]);
-            returnPoints[0] = p1[0];
-            returnPoints[1] = p2[0];
-
-            for (int i=0; i<4; i++) {
-                for (int j=0; j<4; j++) {
-
-                    tempdis = getDistance(p1[i], p2[j]);
-
-                    if (distance > tempdis){
-
-                        distance = tempdis;
-                        returnPoints[0] = p1[i];
-                        returnPoints[1] = p2[j];
-                    }
-
-                }
-            }
-
-
-            return returnPoints;
-        }
-
-
-        public Double getDistance(Point p1, Point p2) {
-
-            int dx = p2.x - p1.x;
-            int dy = p2.y - p2.y;
-
-            Double distance = Math.sqrt(dx*dx*0.1 + dy*dy*0.1);
-
-            return distance;
-        }
     }
 }
