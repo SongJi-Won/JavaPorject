@@ -1,2 +1,6 @@
 /.idea
 /out
+*.class
+*.xml
+out/production/JavaProject/*.class
+.idea/workspace.xml
