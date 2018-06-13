@@ -13,3 +13,5 @@ out/production/JavaProject/MyAttributePane.class
 out/production/JavaProject/MyTextEditorPane.class
 out/production/JavaProject/Node$NodeResizeAdapter.class
 out/production/JavaProject/Node.class
+.idea/
+out/
