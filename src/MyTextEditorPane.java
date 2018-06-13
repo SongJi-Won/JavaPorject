@@ -111,7 +111,7 @@ public class MyTextEditorPane extends JPanel {
             tempNum = i; // 혹시 몰라서 쓰는 복사용 수
             temp[i] = str.split("\n")[i];
 
-            Node rootNode = new Node(0, temp[0], centerX, centerY, 300, 100, Color.pink, 0, null, myAttributePane); //가운데 루트 노드
+            Node rootNode = new Node(0, temp[0], centerX, centerY, 300, 100, Color.pink, 0, null,jSplitPaneTest, myAttributePane); //가운데 루트 노드
             d = Math.sqrt(rootNode.getNodeW()*rootNode.getNodeW()*0.1 + 4*rootNode.getNodeH()*rootNode.getNodeH()*0.1); //루트 노드 기반으로 각 노드간 벌릴 거리 구하는 식
 
 
