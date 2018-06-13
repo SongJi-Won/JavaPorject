@@ -46,7 +46,7 @@ public class JSplitPaneTest extends JFrame {
         myMindMapPane = new MyMindMapPane();
         myAttributePane = new MyAttributePane(this);
 //        myTextEditorPane = new MyTextEditorPane(this, myMindMapPane, myAttributePane, myMindMapPane.getWidth()/2, myMindMapPane.getHeight()/2);
-        myTextEditorPane = new MyTextEditorPane(this, myMindMapPane, myAttributePane, 350, 350);
+        myTextEditorPane = new MyTextEditorPane(this, myMindMapPane, myAttributePane/*, 350, 350*/);
 
         this.clickedNode = null;
 
@@ -166,6 +166,129 @@ public class JSplitPaneTest extends JFrame {
     }
 
 
+
+    public void reset() {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        myMindMapPane = new MyMindMapPane();
+        myAttributePane = new MyAttributePane(this);
+//        myTextEditorPane = new MyTextEditorPane(this, myMindMapPane, myAttributePane, myMindMapPane.getWidth()/2, myMindMapPane.getHeight()/2);
+        myTextEditorPane = new MyTextEditorPane(this, myMindMapPane, myAttributePane/*, 350, 350*/);
+
+        this.clickedNode = null;
+
+        splitPaneMouseListener = new SplitPaneMouseListener();
+
+        menuListener = new MenuListener();
+
+        toolBarListener = new ToolBarListener();
+
+        Node forError = new Node(0, "", 0, 0, 0, 0, Color.white, 0, null, this, myAttributePane);
+
+        myMindMapPane.addNode(forError);
+        myMindMapPane.remove(forError);
+
+        myMindMapPane.addMouseListener(splitPaneMouseListener);
+
+
+        JScrollPane jScrollTextArea = new JScrollPane(myTextEditorPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollTextArea.setSize(new Dimension(300, 800));
+        jScrollTextArea.setMinimumSize(new Dimension(300, 800));
+
+        JScrollPane jScrollMindMap = new JScrollPane(myMindMapPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollMindMap.setSize(new Dimension(800, 800));
+        jScrollMindMap.setMinimumSize(new Dimension(800, 800));
+
+        JScrollPane jScrollAttribute = new JScrollPane(myAttributePane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollAttribute.setSize(new Dimension(300, 800));
+        jScrollAttribute.setMinimumSize(new Dimension(300,800));
+
+
+        JSplitPane jSplitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollMindMap, jScrollAttribute);
+        jSplitPane1.setResizeWeight(0.8);
+        jSplitPane1.setLeftComponent(jScrollMindMap);
+        jSplitPane1.setRightComponent(jScrollAttribute);
+
+
+        JSplitPane jSplitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollTextArea, jSplitPane1);
+        jSplitPane2.setResizeWeight(0.3);
+        jSplitPane2.setLeftComponent(jScrollTextArea);
+        jSplitPane2.setRightComponent(jSplitPane1);
+
+
+        jMenuBar = new JMenuBar();
+
+        jMenu = new JMenu("Menu Bar");
+        jMenuBar.add(jMenu);
+
+        newMenuItem = new JMenuItem("new");
+        openMenuItem = new JMenuItem("open");
+        saveMenuItem = new JMenuItem("save");
+        anotherNameSaveMenuItem = new JMenuItem("save to another name");
+        closeMenuItem = new JMenuItem("close");
+        applyMenuItem = new JMenuItem("apply");
+        changeMenuItem = new JMenuItem("change");
+
+        newMenuItem.addActionListener(menuListener);
+        openMenuItem.addActionListener(menuListener);
+        saveMenuItem.addActionListener(menuListener);
+        anotherNameSaveMenuItem.addActionListener(menuListener);
+        closeMenuItem.addActionListener(menuListener);
+        applyMenuItem.addActionListener(menuListener);
+        changeMenuItem.addActionListener(menuListener);
+
+        jMenu.add(newMenuItem);
+        jMenu.add(openMenuItem);
+        jMenu.add(saveMenuItem);
+        jMenu.add(anotherNameSaveMenuItem);
+        jMenu.add(closeMenuItem);
+        jMenu.add(applyMenuItem);
+        jMenu.add(changeMenuItem);
+
+        jMenuBar.add(jMenu);
+        setJMenuBar(jMenuBar);
+
+
+        jToolBar = new JToolBar("Tool Bar");
+
+        newToolBtn = new JButton("new");
+        openToolBtn = new JButton("open");
+        saveToolBtn = new JButton("save");
+        anotherNameSaveToolBtn = new JButton("save to another name");
+        closeToolBtn = new JButton("close");
+        applyToolBtn = new JButton("apply");
+        changeToolBtn = new JButton("change");
+
+        newToolBtn.addActionListener(toolBarListener);
+        openToolBtn.addActionListener(toolBarListener);
+        saveToolBtn.addActionListener(toolBarListener);
+        anotherNameSaveToolBtn.addActionListener(toolBarListener);
+        closeToolBtn.addActionListener(toolBarListener);
+        applyToolBtn.addActionListener(toolBarListener);
+        changeToolBtn.addActionListener(toolBarListener);
+
+        jToolBar.add(newToolBtn);
+        jToolBar.add(openToolBtn);
+        jToolBar.add(saveToolBtn);
+        jToolBar.add(anotherNameSaveToolBtn);
+        jToolBar.add(closeToolBtn);
+        jToolBar.add(applyToolBtn);
+        jToolBar.add(changeToolBtn);
+
+
+        this.setLayout(new BorderLayout());
+
+        this.add(jToolBar, "North");
+        this.add(jSplitPane2, "Center");
+        setSize(1400, 800);
+        setVisible(true);
+
+    }
+
+
     public MyTextEditorPane getMyTextEditorPane() {
         return myTextEditorPane;
     }
@@ -201,7 +324,10 @@ public class JSplitPaneTest extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
 
-            clickedNode.setBackground(clickedNode.getColor());
+            if (clickedNode != null) {
+
+                clickedNode.setBackground(clickedNode.getColor());
+            }
             clickedNode = null;
         }
 
@@ -259,6 +385,7 @@ public class JSplitPaneTest extends JFrame {
             if (e.getSource() == newMenuItem) {
 
                 //새로 만들기 하는 코드
+                reset();
             }
             else if (e.getSource() == openMenuItem) {
 
@@ -313,6 +440,7 @@ public class JSplitPaneTest extends JFrame {
             if (e.getSource() == newToolBtn) {
 
                 //새로 만들기 하는 코드
+                reset();
             }
             else if (e.getSource() == openToolBtn) {
 

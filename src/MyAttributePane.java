@@ -69,17 +69,20 @@ public class MyAttributePane extends JPanel {
             int getW = Integer.parseInt(w.getAttrValue().getText());
             int getH = Integer.parseInt(h.getAttrValue().getText());
             String getCOLOR = color.getAttrValue().getText().toUpperCase();
+            System.out.println("이상덕 getCOLOR : " + getCOLOR);
+
+            System.out.println("이상덕 getCOLOR.substring(0,2) : [" + getCOLOR.substring(0, 2)+"]");
+            System.out.println("이상덕 getCOLOR.substring(0,2) : [" + getCOLOR.substring(2, 4)+"]");
+            System.out.println("이상덕 getCOLOR.substring(0,2) : [" + getCOLOR.substring(4, 6)+"]");
 
 
-            Matcher m = p.matcher(getCOLOR);
+            red = Integer.parseInt(getCOLOR.substring(0,2), 16);
+            green = Integer.parseInt(getCOLOR.substring(2,4), 16);
+            blue = Integer.parseInt(getCOLOR.substring(4,6), 16);
 
-            red = Integer.parseInt(m.group().substring(0,2), 16);
-            green = Integer.parseInt(m.group().substring(2,4), 16);
-            blue = Integer.parseInt(m.group().substring(4,6), 16);
 
             selectedNode.update(new Point(getX, getY), new Dimension(getW, getH));
             selectedNode.setColor(new Color(red, green, blue));
-
 
             selectedNode.setLocation(new Point(getX, getY));
             selectedNode.setSize(new Dimension(getW, getH));
@@ -122,6 +125,8 @@ public class MyAttributePane extends JPanel {
     public MyAttribute getColorAttribute() {
         return color;
     }
+
+    public JButton getChangeBtn() { return changeBtn; }
 
 
 

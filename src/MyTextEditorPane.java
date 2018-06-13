@@ -2,10 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 
 public class MyTextEditorPane extends JPanel {
 
+    private JPanel jPanel;
     private JLabel title;
 
     private JTextArea textArea;
@@ -23,7 +25,7 @@ public class MyTextEditorPane extends JPanel {
     private int centerX;
     private int centerY;
 
-    public MyTextEditorPane(JSplitPaneTest jSplitPaneTest, MyMindMapPane myMindMapPane, MyAttributePane myAttributePane, int centerX, int centerY) {
+    public MyTextEditorPane(JSplitPaneTest jSplitPaneTest, MyMindMapPane myMindMapPane, MyAttributePane myAttributePane/*, int centerX, int centerY*/) {
         title = new JLabel("Text Label Pane");
         title.setHorizontalTextPosition(SwingConstants.CENTER);
         title.setFont(new Font("돋움", Font.BOLD, 20));
@@ -51,6 +53,7 @@ public class MyTextEditorPane extends JPanel {
         this.add(textArea, BorderLayout.CENTER);
         this.add(applyBtn, BorderLayout.SOUTH);
 
+        jPanel = this;
 
     }
 
@@ -81,6 +84,11 @@ public class MyTextEditorPane extends JPanel {
             double d;
 
 
+            centerX = jPanel.getWidth()/2;
+            centerY = jPanel.getHeight()/2;
+
+            System.out.println("centerX :"+centerX+ " / centerY :"+centerY);
+
 
 
             //적채형 여기서 부터가 새로 노드 넣어주는 부분이에요
@@ -95,12 +103,42 @@ public class MyTextEditorPane extends JPanel {
             Node parentNode = newNode.getParentNode(); //그리고 이부분은 부모가 있으면 부모와 위치 기반으로 자식 위치 설정해주는 부분인데 좀 안되요...;;생각만큼
             if (parentNode != null){
 
-                int dx = new Double(d*Math.cos(Math.toRadians(-225+90*id))).intValue();
-                int dy = new Double(d*Math.sin(Math.toRadians(-225+90*id))).intValue();
+//                int dx = new Double(d*Math.cos(Math.toRadians(-225+90*id))).intValue();
+//                int dy = new Double(d*Math.sin(Math.toRadians(-225+90*id))).intValue();
+//
+//                System.out.println("!!!!!! dx :"+dx+"   / dy :"+dy);
+//
+//                newNode.setLocation(parentNode.getNodeX()+dx, parentNode.getNodeY()+dy);
 
-                System.out.println("!!!!!! dx :"+dx+"   / dy :"+dy);
+                int dx=0;
+                int dy=0;
+                int theta = getTheta(id);
 
-                newNode.setLocation(parentNode.getNodeX()+dx, parentNode.getNodeY()+dy);
+                switch (id%4) {
+
+                    case 1:
+                        dx = -new Double(Math.cos(Math.toRadians(theta*1.0))*d).intValue();
+                        dy = new Double(Math.sin(Math.toRadians(theta*1.0))*d).intValue();;
+                        break;
+                    case 2:
+                        dx = new Double(Math.cos(Math.toRadians(theta*1.0))*d).intValue();
+                        dy = new Double(Math.sin(Math.toRadians(theta*1.0))*d).intValue();;
+                        break;
+                    case 3:
+                        dx = new Double(Math.cos(Math.toRadians(theta*1.0))*d).intValue();
+                        dy = -new Double(Math.sin(Math.toRadians(theta*1.0))*d).intValue();;
+                        break;
+                    case 0:
+                        dx = -new Double(Math.cos(Math.toRadians(theta*1.0))*d).intValue();
+                        dy = -new Double(Math.sin(Math.toRadians(theta*1.0))*d).intValue();;
+                        break;
+                }
+
+                System.out.println("\n\n\n송지원 : dx :"+dx+" / dy :"+dy);
+                Point newPont = new Point(parentNode.getNodeX()+dx, parentNode.getNodeY()+dy);
+
+                newNode.setLocation(newPont);
+                newNode.update(newPont, newNode.getDimension());
             }
 
 
@@ -113,6 +151,33 @@ public class MyTextEditorPane extends JPanel {
 
 
         }
+    }
+
+
+    public int getTheta(int index) {
+
+        Random random = new Random();
+        int theta = 0;
+
+        switch (index%4) {
+
+            case 1:
+                theta = 135 + random.nextInt(30) - 29;
+                break;
+            case 2:
+                theta = 45 + random.nextInt(30) - 29;
+                break;
+            case 3:
+                theta = 315 + random.nextInt(30) - 29;
+                break;
+            case 0:
+                theta = 225 + random.nextInt(30) - 29;
+                break;
+        }
+
+        System.out.println("\n\n\ntheta : " + theta);
+
+        return theta;
     }
 
     public void parseToTree(String str) {
