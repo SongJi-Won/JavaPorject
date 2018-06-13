@@ -1,21 +1,24 @@
+
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 
 public class SaveHelper {
 
-    private  int idTest;
-    private   String textOfNodeTest;
-    private  int nodeXTest;
-    private  int nodeYTest;
+    private int idTest;
+    private String textOfNodeTest;
+    private int nodeXTest;
+    private int nodeYTest;
 
 
-    private  int nodeWTest;
-    private  int nodeHTest;
+    private int nodeWTest;
+    private int nodeHTest;
 
 
-    private  Color colorTest;
+    private Color colorTest;
 
-    private  int levelTest;
+    private int levelTest;
 
 
     private int parentIndex;
@@ -92,7 +95,7 @@ public class SaveHelper {
         this.parentIndex = parentIndex;
     }
 
-    public SaveHelper(int id, String text, int x, int y, int w, int h, Color color, int level, int index) {
+    public SaveHelper(int id, String text, int x, int y, int w, int h, Color color, int level, int parentIndex) {
 
         this.idTest = id;
 
@@ -106,10 +109,11 @@ public class SaveHelper {
         this.colorTest = color;
         this.levelTest = level;
 
-        this.parentIndex = index;
 
+        this.parentIndex = parentIndex;
 
 
     }
 
 }
+

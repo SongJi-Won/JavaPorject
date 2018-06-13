@@ -68,6 +68,7 @@ public class MyMindMapPane extends JPanel {
 
     public Point[] getShortestPoint(Node node1, Node node2)
     {
+        System.out.println("\t\t\tnode1 :"+node1.getText() + "," + node1.getId()+" / node2 :" + node2.getText() + "," + node2.getId());
         Double distance;
         Double tempdis;
         Point [] returnPoints = new Point[2];
@@ -147,7 +148,8 @@ public class MyMindMapPane extends JPanel {
             Node parentNode;
             Node curNode;
 
-            if (components[i] instanceof Node) {
+//            if (components[i] instanceof Node) {
+            if (components[i] instanceof Node && ((Node)components[i]).getId() != 0) {
 
                 curNode = (Node)components[i];
 

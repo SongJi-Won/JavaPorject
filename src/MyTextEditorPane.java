@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -15,11 +16,12 @@ import java.io.IOException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-
+import java.util.Random;
 
 
 public class MyTextEditorPane extends JPanel {
 
+    private JPanel jPanel;
     private  JLabel title;
     private   JTextArea textArea;
     private   JButton applyBtn;
@@ -36,8 +38,13 @@ public class MyTextEditorPane extends JPanel {
     private   int centerX;
     private   int centerY;
 
-    public MyTextEditorPane(JSplitPaneTest jSplitPaneTest, MyMindMapPane myMindMapPane, MyAttributePane myAttributePane, int centerX, int centerY) {
+//    public MyTextEditorPane(JSplitPaneTest jSplitPaneTest, MyMindMapPane myMindMapPane, MyAttributePane myAttributePane, int centerX, int centerY) {
+    private double baseTheta;
+
+    public MyTextEditorPane(JSplitPaneTest jSplitPaneTest, MyMindMapPane myMindMapPane, MyAttributePane myAttributePane/*, int centerX, int centerY*/) {
         title = new JLabel("Text Label Pane");
+        title.setHorizontalTextPosition(SwingConstants.CENTER);
+        title.setFont(new Font("돋움", Font.BOLD, 20));
 
         textArea = new JTextArea(20, 14);
         textArea.setTabSize(2);
@@ -55,31 +62,78 @@ public class MyTextEditorPane extends JPanel {
         this.centerX = centerX;
         this.centerY = centerY;
 
+
         this.setLayout(new BorderLayout());
 
         this.add(title, BorderLayout.NORTH);
         this.add(textArea, BorderLayout.CENTER);
         this.add(applyBtn, BorderLayout.SOUTH);
 
+        jPanel = this;
 
     }
 
 
-    public JButton getApplyBtn()
-    {
+    public JButton getApplyBtn() {
         return this.applyBtn;
     }
 
 
     class ApplyButtonListener implements ActionListener {
 
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
             String input = textArea.getText();
             parseToTree(input);
+            centerX = jPanel.getWidth() / 2;
+            centerY = jPanel.getHeight() / 2;
+//            System.out.println("centerX :" + centerX + " / centerY :" + centerY);
+
+            parseToTree(input);
 
         }
+    }
+
+    public void setNodesTheta(Node[] nodes, int nodeCnt) {
+
+        int i;
+        baseTheta = 360 / nodeCnt;
+
+        for (i = 0; i < nodes.length; i++) {
+
+            if (nodes[i] != null) {
+
+                nodes[i].setTheta(baseTheta * i);
+            }
+        }
+    }
+
+
+
+
+    public double getRandomTheta(Node input) {
+
+        double theta = input.getTheta();
+        Random random = new Random();
+        int bounds = new Double(baseTheta).intValue();
+
+        if (theta == -1.0) {
+
+        } else if (theta == Math.PI) {
+
+            System.out.println("초기화 되지 않은 값 들어옴");
+            input.setTheta(input.getParentNode().getTheta());
+            theta = input.getTheta();
+            theta = theta + random.nextInt(bounds) - bounds;
+
+        } else {
+
+            theta = theta + random.nextInt(bounds) - bounds;
+        }
+
+        return theta;
     }
 
     private void parseToTree(String str) {
@@ -100,19 +154,18 @@ public class MyTextEditorPane extends JPanel {
         String parent[] = new String[40];
         int levelArr[] = new int[40];
         String tempStr;
-        int depth, tempNum, id =0;
+        int depth, tempNum, id = 0;
         int indexForLevelArray = 0;
         double d = 0;
 
-       input = str.split("\n");
-       //System.out.println(input.length);
+        input = str.split("\n");
 
         for (int i = 0; i < input.length; i++) {
             tempNum = i; // 혹시 몰라서 쓰는 복사용 수
             temp[i] = str.split("\n")[i];
-
-            Node rootNode = new Node(0, temp[0], centerX, centerY, 300, 100, Color.pink, 0, null,jSplitPaneTest, myAttributePane); //가운데 루트 노드
-            d = Math.sqrt(rootNode.getNodeW()*rootNode.getNodeW()*0.1 + 4*rootNode.getNodeH()*rootNode.getNodeH()*0.1); //루트 노드 기반으로 각 노드간 벌릴 거리 구하는 식
+            Node rootNode = new Node(0, temp[0], centerX, centerY, 90, 50, Color.pink, 0, null, jSplitPaneTest, myAttributePane); //가운데 루트 노드
+            rootNode.setTheta(-1.0);
+            d = Math.sqrt(rootNode.getNodeW() * rootNode.getNodeW() * 1.0 + 4 * rootNode.getNodeH() * rootNode.getNodeH() * 1.0); //루트 노드 기반으로 각 노드간 벌릴 거리 구하는 식
 
 
             if (i == 0) {
@@ -126,26 +179,32 @@ public class MyTextEditorPane extends JPanel {
             depth = indentCheck(temp[i]);
             tempStr = temp[i].replaceAll("\\s+", "");  // 공백제거   //바로 temp[i]에 넣으면 에러뜸 이유 불명
             temp[i] = tempStr; // 공백제거후 다시 넣어줌
-
-
             levelArr[i] = depth;
-
             background = colorSelectFromLevel(depth);
-            Node newNode = new Node(id++, temp[i], centerX, centerY, 300, 100, background, depth, null, jSplitPaneTest, myAttributePane); //여기세 rootNode 부분에 새로 생성하는 노드 newNode의 부모 노드 객체 넣어줘야 해요!
+
+            Node newNode = new Node(id++, temp[i], centerX, centerY, 90, 50, background, depth, null, jSplitPaneTest, myAttributePane); //여기세 rootNode 부분에 새로 생성하는 노드 newNode의 부모 노드 객체 넣어줘야 해요!
+
             nodeArr[i] = newNode;  // parent 설정을 위해 배열에 넣어줌
 
+            System.out.println("level : " + depth);
             if (depth > 0) {
+
+                if (depth == 1) {
+                    levelOneArray[indexForLevelArray] = newNode;
+                    indexForLevelArray++;
+                }
+
                 if (levelArr[i - 1] < depth) {   // level1 증가
                     //parent[i] = temp[i - 1];
-                    parentNodeArr[i] = nodeArr[i-1];
+                    parentNodeArr[i] = nodeArr[i - 1];
                 } else if (levelArr[i - 1] == depth) {  //동일 레벨
-                   // parent[i] = parent[i - 1];
-                    parentNodeArr[i] = parentNodeArr[i-1];
+                    // parent[i] = parent[i - 1];
+                    parentNodeArr[i] = parentNodeArr[i - 1];
                 } else if (levelArr[i - 1] > depth) {
                     while (true) {
                         if (levelArr[tempNum - 2] == depth) {
-                           // parent[i] = parent[tempNum - 2];
-                            parentNodeArr[i] = parentNodeArr[tempNum-2];
+                            // parent[i] = parent[tempNum - 2];
+                            parentNodeArr[i] = parentNodeArr[tempNum - 2];
                             break;
                         } else {
                             tempNum--;
@@ -153,61 +212,57 @@ public class MyTextEditorPane extends JPanel {
                     }
                 }
             }
+
             newNode.setParent(parentNodeArr[i]);
-            if(depth ==1){
-                levelOneArray[indexForLevelArray] = newNode;
-                indexForLevelArray++;
+        }
+
+
+        setNodesTheta(levelOneArray, indexForLevelArray + 1);
+
+
+        for (int i = 0; i < nodeArr.length; i++) {
+
+            Node newNode = nodeArr[i];
+            if (newNode != null) {
+                Node parentNode = newNode.getParentNode();
+
+                if (parentNode != null) {
+
+                    if (parentNode.getTheta() != -1.0) {
+
+                        newNode.setTheta(parentNode.getTheta());
+                    }
+
+                    if (parentNode != null) {
+
+                        double theta = getRandomTheta(newNode);
+
+                        int dx = new Double(Math.cos(Math.toRadians(theta * 1.0)) * d).intValue();
+                        int dy = new Double(Math.sin(Math.toRadians(theta * 1.0)) * d).intValue();
+
+                        Point newPont = new Point(parentNode.getNodeX() + dx, parentNode.getNodeY() + dy);
+
+                        newNode.setLocation(newPont);
+
+                        newNode.update(newPont, newNode.getDimension());
+                    }
+
+
+                    Node forError = new Node(-1, "", 0, 0, 0, 0, Color.white, -1, null, jSplitPaneTest, myAttributePane); //애는 그 마지막 노드 사이즈 개떡같이 나오는 부분 처리 해주는 애에요
+                    forError.setOpaque(false);
+                    forError.setVisible(false);
+
+                    myMindMapPane.addNode(newNode);
+
+                    myMindMapPane.addNode(forError);
+
+                }
             }
-
-
-            Node parentNode = newNode.getParentNode(); //그리고 이부분은 부모가 있으면 부모와 위치 기반으로 자식 위치 설정해주는 부분인데 좀 안되요...;;생각만큼
-            if (parentNode != null){
-
-                int dx = new Double(d*Math.cos(Math.toRadians(-225+90*id))).intValue();
-                int dy = new Double(d*Math.sin(Math.toRadians(-225+90*id))).intValue();
-
-                //System.out.println("!!!!!! dx :"+dx+"   / dy :"+dy);
-
-                newNode.setLocation(parentNode.getNodeX()+dx, parentNode.getNodeY()+dy);
-            }
-
-
-            Node forError = new Node(-1, "", 0,0,0,0,Color.white,-1, null,jSplitPaneTest, myAttributePane); //애는 그 마지막 노드 사이즈 개떡같이 나오는 부분 처리 해주는 애에요
-           // System.out.println(newNode);
-
-
-            SaveHelper save = new SaveHelper(id, temp[i], centerX, centerY, 300, 100, background, depth, i);
-            saveArr[i] = save;
-            //json = gson.toJson(save);
-            //json = gson.toJson(newNode);
-           //System.out.println(json);
-
-            //myMindMapPane.addNode(parentNode); //여기서는 제가 2개만 명시적으로 때려박아서 두줄만으로 노드 추가해요. 포문 같은걸로 돌리시면 될듯!
-            myMindMapPane.addNode(newNode);
-
-            myMindMapPane.addNode(forError);
-
-            System.out.println("텍스트 : " + tempStr + " 레벨 : " + depth + " 부모 : " + parent[i]);
 
         }
 
 
-        json = gson.toJson(saveArr);
-        System.out.println(json);
-        try {
-
-            FileWriter file = new FileWriter("/Users/shinjeongmin/JavaPorject/test.json");
-            file.write(json);
-            file.flush();
-            file.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-        System.out.println("end");
+//        System.out.println("end");
 
 
     }
@@ -221,6 +276,7 @@ public class MyTextEditorPane extends JPanel {
             } else {
                 i += 1;
                 depth += 1;
+
             }
         }
 

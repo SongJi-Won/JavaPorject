@@ -2,23 +2,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MyAttributePane extends JPanel {
 
     private JLabel title;
 
-    private  MyAttribute text;
-    private  MyAttribute attributeX;
-    private  MyAttribute attributeY;
-    private  MyAttribute w;
-    private  MyAttribute h;
-    private  MyAttribute color;
+
+    private MyAttribute text;
+    private MyAttribute attributeX;
+    private MyAttribute attributeY;
+    private MyAttribute attributeW;
+    private MyAttribute attributeH;
+    private MyAttribute attributeColor;
+
+//    private MyAttribute x;
+//    private MyAttribute y;
+//    private MyAttribute w;
+//    private MyAttribute h;
+//    private MyAttribute color;
 
     private JButton changeBtn;
 
-    //private JSplitPaneTest jSplitPaneTest;
     private Node selectedNode;
 
     public MyAttributePane(JSplitPaneTest jSplitPaneTest)
@@ -31,9 +36,9 @@ public class MyAttributePane extends JPanel {
         text = new MyAttribute("   TEXT", "None", false);
         attributeX = new MyAttribute("      X", "0", true);
         attributeY = new MyAttribute("      Y", "0", true);
-        w = new MyAttribute("      W", "0", true);
-        h = new MyAttribute("      H", "0", true);
-        color = new MyAttribute("COLOR", "0", true);
+        attributeW = new MyAttribute("      W", "0", true);
+        attributeH = new MyAttribute("      H", "0", true);
+        attributeColor = new MyAttribute("COLOR", "0", true);
 
         changeBtn = new JButton("변경");
         //changeBtn.add 송지원 여기 버튼 누르면 값 바꿔주는 리스너 추가
@@ -46,9 +51,9 @@ public class MyAttributePane extends JPanel {
         this.add(text);
         this.add(attributeX);
         this.add(attributeY);
-        this.add(w);
-        this.add(h);
-        this.add(color);
+        this.add(attributeW);
+        this.add(attributeH);
+        this.add(attributeColor);
         this.add(changeBtn);
 
 
@@ -66,20 +71,18 @@ public class MyAttributePane extends JPanel {
 
             int getX = Integer.parseInt(attributeX.getAttrValue().getText());
             int getY = Integer.parseInt(attributeY.getAttrValue().getText());
-            int getW = Integer.parseInt(w.getAttrValue().getText());
-            int getH = Integer.parseInt(h.getAttrValue().getText());
-            String getCOLOR = color.getAttrValue().getText().toUpperCase();
+            int getW = Integer.parseInt(attributeW.getAttrValue().getText());
+            int getH = Integer.parseInt(attributeH.getAttrValue().getText());
+            String getCOLOR = attributeColor.getAttrValue().getText().toUpperCase();
 
 
-            Matcher m = p.matcher(getCOLOR);
+            red = Integer.parseInt(getCOLOR.substring(0,2), 16);
+            green = Integer.parseInt(getCOLOR.substring(2,4), 16);
+            blue = Integer.parseInt(getCOLOR.substring(4,6), 16);
 
-            red = Integer.parseInt(m.group().substring(0,2), 16);
-            green = Integer.parseInt(m.group().substring(2,4), 16);
-            blue = Integer.parseInt(m.group().substring(4,6), 16);
 
             selectedNode.update(new Point(getX, getY), new Dimension(getW, getH));
             selectedNode.setColor(new Color(red, green, blue));
-
 
             selectedNode.setLocation(new Point(getX, getY));
             selectedNode.setSize(new Dimension(getW, getH));
@@ -111,17 +114,19 @@ public class MyAttributePane extends JPanel {
     }
 
     public MyAttribute getWAttribute() {
-        return w;
+        return attributeW;
     }
 
 
     public MyAttribute getHAttribute() {
-        return h;
+        return attributeH;
     }
 
     public MyAttribute getColorAttribute() {
-        return color;
+        return attributeColor;
     }
+
+    public JButton getChangeBtn() { return changeBtn; }
 
 
 
