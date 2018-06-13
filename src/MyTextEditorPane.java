@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+//import com.google.gson.Gson;
 
 
 public class MyTextEditorPane extends JPanel {
@@ -25,12 +26,15 @@ public class MyTextEditorPane extends JPanel {
     private int centerX;
     private int centerY;
 
+    private double baseTheta;
+
     public MyTextEditorPane(JSplitPaneTest jSplitPaneTest, MyMindMapPane myMindMapPane, MyAttributePane myAttributePane/*, int centerX, int centerY*/) {
         title = new JLabel("Text Label Pane");
         title.setHorizontalTextPosition(SwingConstants.CENTER);
         title.setFont(new Font("돋움", Font.BOLD, 20));
 
         textArea = new JTextArea(20, 14);
+        textArea.setTabSize(2);
 
         applyBtn = new JButton("적용");
 
@@ -46,7 +50,6 @@ public class MyTextEditorPane extends JPanel {
         this.centerY = centerY;
 
 
-
         this.setLayout(new BorderLayout());
 
         this.add(title, BorderLayout.NORTH);
@@ -58,180 +61,187 @@ public class MyTextEditorPane extends JPanel {
     }
 
 
-    public JButton getApplyBtn()
-    {
+    public JButton getApplyBtn() {
         return this.applyBtn;
     }
 
 
     class ApplyButtonListener implements ActionListener {
 
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            //여기서 제이슨 정보듣 받아와서
+            centerX = jPanel.getWidth() / 2;
+            centerY = jPanel.getHeight() / 2;
 
-//            Node newNode1 = new Node(0, "Node1", 100, 500, 300, 100, Color.pink, 0, null, myAttributePane);
-//            Node newNode2 = new Node(0, "Node2", 400, 600, 300, 100, Color.pink, 0, newNode1, myAttributePane);
-//            Node newNode3 = new Node(0, "Node3", 300, 700, 300, 100, Color.pink, 0, newNode2, myAttributePane);
-//
-//            myMindMapPane.addNode(newNode1);
-//            myMindMapPane.addNode(newNode2);
-//            myMindMapPane.addNode(newNode3);
-//
-//            myMindMapPane.setVisible(true);
+            System.out.println("centerX :" + centerX + " / centerY :" + centerY);
 
-            double d;
-
-
-            centerX = jPanel.getWidth()/2;
-            centerY = jPanel.getHeight()/2;
-
-            System.out.println("centerX :"+centerX+ " / centerY :"+centerY);
-
-
-
-            //적채형 여기서 부터가 새로 노드 넣어주는 부분이에요
-            //그 줄 갯수? 받아오셔서 반복문 도시면서 하시면 될듯!
-            Node rootNode = new Node(id++, "읽어들여온 정보 ", centerX, centerY, 300, 100, Color.pink, 0, null, jSplitPaneTest,  myAttributePane); //가운데 루트 노드
-
-            d = Math.sqrt(rootNode.getNodeW()*rootNode.getNodeW()*0.1 + 4*rootNode.getNodeH()*rootNode.getNodeH()*0.1); //루트 노드 기반으로 각 노드간 벌릴 거리 구하는 식
-
-            Node newNode = new Node(id++, "Node2", centerX, centerY, 300, 100, Color.pink, 0, rootNode, jSplitPaneTest, myAttributePane); //여기세 rootNode 부분에 새로 생성하는 노드 newNode의 부모 노드 객체 넣어줘야 해요!
-            //이 부분이 좀 어려울것같은데 지금 드는 생각으로는 각 노드별로 아이디 값 저장해둔 다음에 아이디값 주면 노드 객체 리턴는 메소드 짜서 그 메소드로 노드 객체 받아서 넣는 방법이 떠오르네요
-
-            Node parentNode = newNode.getParentNode(); //그리고 이부분은 부모가 있으면 부모와 위치 기반으로 자식 위치 설정해주는 부분인데 좀 안되요...;;생각만큼
-            if (parentNode != null){
-
-//                int dx = new Double(d*Math.cos(Math.toRadians(-225+90*id))).intValue();
-//                int dy = new Double(d*Math.sin(Math.toRadians(-225+90*id))).intValue();
-//
-//                System.out.println("!!!!!! dx :"+dx+"   / dy :"+dy);
-//
-//                newNode.setLocation(parentNode.getNodeX()+dx, parentNode.getNodeY()+dy);
-
-                int dx=0;
-                int dy=0;
-                int theta = getTheta(id);
-
-                switch (id%4) {
-
-                    case 1:
-                        dx = -new Double(Math.cos(Math.toRadians(theta*1.0))*d).intValue();
-                        dy = new Double(Math.sin(Math.toRadians(theta*1.0))*d).intValue();;
-                        break;
-                    case 2:
-                        dx = new Double(Math.cos(Math.toRadians(theta*1.0))*d).intValue();
-                        dy = new Double(Math.sin(Math.toRadians(theta*1.0))*d).intValue();;
-                        break;
-                    case 3:
-                        dx = new Double(Math.cos(Math.toRadians(theta*1.0))*d).intValue();
-                        dy = -new Double(Math.sin(Math.toRadians(theta*1.0))*d).intValue();;
-                        break;
-                    case 0:
-                        dx = -new Double(Math.cos(Math.toRadians(theta*1.0))*d).intValue();
-                        dy = -new Double(Math.sin(Math.toRadians(theta*1.0))*d).intValue();;
-                        break;
-                }
-
-                System.out.println("\n\n\n송지원 : dx :"+dx+" / dy :"+dy);
-                Point newPont = new Point(parentNode.getNodeX()+dx, parentNode.getNodeY()+dy);
-
-                newNode.setLocation(newPont);
-                newNode.update(newPont, newNode.getDimension());
-            }
-
-
-
-            myMindMapPane.addNode(parentNode); //여기서는 제가 2개만 명시적으로 때려박아서 두줄만으로 노드 추가해요. 포문 같은걸로 돌리시면 될듯!
-            myMindMapPane.addNode(newNode);
-
-
-            //여기가 끝!
-
+            String input = textArea.getText();
+            parseToTree(input);
 
         }
     }
 
+    public void setNodesTheta(Node[] nodes, int nodeCnt) {
 
-    public int getTheta(int index) {
+        int i;
+        baseTheta = 360 / nodeCnt;
 
-        Random random = new Random();
-        int theta = 0;
+        for (i = 0; i < nodes.length; i++) {
 
-        switch (index%4) {
+            if (nodes[i] != null) {
 
-            case 1:
-                theta = 135 + random.nextInt(30) - 29;
-                break;
-            case 2:
-                theta = 45 + random.nextInt(30) - 29;
-                break;
-            case 3:
-                theta = 315 + random.nextInt(30) - 29;
-                break;
-            case 0:
-                theta = 225 + random.nextInt(30) - 29;
-                break;
+                nodes[i].setTheta(baseTheta * i);
+            }
         }
+    }
 
-        System.out.println("\n\n\ntheta : " + theta);
+
+
+
+    public double getRandomTheta(Node input) {
+
+        double theta = input.getTheta();
+        Random random = new Random();
+        int bounds = new Double(baseTheta).intValue();
+
+        if (theta == -1.0) {
+
+        } else if (theta == Math.PI) {
+
+            System.out.println("초기화 되지 않은 값 들어옴");
+            input.setTheta(input.getParentNode().getTheta());
+            theta = input.getTheta();
+            theta = theta + random.nextInt(bounds) - bounds;
+
+        } else {
+
+            theta = theta + random.nextInt(bounds) - bounds;
+        }
 
         return theta;
     }
 
+
     public void parseToTree(String str) {
 
-
+        Node[] parentNodeArr = new Node[40];
+        Node[] levelOneArray = new Node[40];
+        Node[] nodeArr = new Node[40];
         String[] input;
         String temp[] = new String[40];
         String parent[] = new String[40];
         int levelArr[] = new int[40];
         String tempStr;
-        int level;
-        int tempNum;
+        int level, tempNum, id = 0;
+        int indexForLevelArray = 0;
+        double d = 0;
 
         input = str.split("\n");
-        //System.out.println(input.length);
 
         for (int i = 0; i < input.length; i++) {
             tempNum = i; // 혹시 몰라서 쓰는 복사용 수
+            temp[i] = str.split("\n")[i];
+
+            Node rootNode = new Node(0, temp[0], centerX, centerY, 90, 50, Color.pink, 0, null, jSplitPaneTest, myAttributePane); //가운데 루트 노드
+            rootNode.setTheta(-1.0);
+            d = Math.sqrt(rootNode.getNodeW() * rootNode.getNodeW() * 1.0 + 4 * rootNode.getNodeH() * rootNode.getNodeH() * 1.0); //루트 노드 기반으로 각 노드간 벌릴 거리 구하는 식
+
 
             if (i == 0) {
-                parent[i] = temp[i];
+                parent[i] = temp[i]; //본인을 루트로
+                parentNodeArr[i] = rootNode;
+                nodeArr[i] = rootNode;
                 levelArr[i] = 0;
             }
 
-            temp[i] = str.split("\n")[i];
             level = indentCheck(temp[i]);
             tempStr = temp[i].replaceAll("\\s+", "");  // 공백제거   //바로 temp[i]에 넣으면 에러뜸 이유 불명
             temp[i] = tempStr; // 공백제거후 다시 넣어줌
             levelArr[i] = level;
+
+            Node newNode = new Node(id++, temp[i], centerX, centerY, 90, 50, Color.pink, level, null, jSplitPaneTest, myAttributePane); //여기세 rootNode 부분에 새로 생성하는 노드 newNode의 부모 노드 객체 넣어줘야 해요!
+
+            nodeArr[i] = newNode;  // parent 설정을 위해 배열에 넣어줌
+
+            System.out.println("level : " + level);
             if (level > 0) {
+
+                if (level == 1) {
+                    levelOneArray[indexForLevelArray] = newNode;
+                    indexForLevelArray++;
+                }
+
                 if (levelArr[i - 1] < level) {   // level1 증가
-                    parent[i] = temp[i - 1];
+                    //parent[i] = temp[i - 1];
+                    parentNodeArr[i] = nodeArr[i - 1];
                 } else if (levelArr[i - 1] == level) {  //동일 레벨
-                    parent[i] = parent[i - 1];
+                    // parent[i] = parent[i - 1];
+                    parentNodeArr[i] = parentNodeArr[i - 1];
                 } else if (levelArr[i - 1] > level) {
                     while (true) {
                         if (levelArr[tempNum - 2] == level) {
-                            parent[i] = parent[tempNum - 2];
+                            // parent[i] = parent[tempNum - 2];
+                            parentNodeArr[i] = parentNodeArr[tempNum - 2];
                             break;
                         } else {
                             tempNum--;
                         }
                     }
                 }
-
-
             }
-//            Node newNode = new Node(5, temp[i], 100, 200, 300, 100, Color.pink, level, myAttributePane);
-//            myMindMapPane.addNode(newNode);
-//            System.out.println("텍스트 : " + tempStr + " 레벨 : " + level + " 부모 : " + parent[i]);
+
+            newNode.setParent(parentNodeArr[i]);
         }
 
 
-        System.out.println("end");
+        setNodesTheta(levelOneArray, indexForLevelArray + 1);
+
+
+        for (int i = 0; i < nodeArr.length; i++) {
+
+            Node newNode = nodeArr[i];
+            if (newNode != null) {
+                Node parentNode = newNode.getParentNode();
+
+                if (parentNode != null) {
+
+                    if (parentNode.getTheta() != -1.0) {
+
+                        newNode.setTheta(parentNode.getTheta());
+                    }
+
+                    if (parentNode != null) {
+
+                        double theta = getRandomTheta(newNode);
+
+                        int dx = new Double(Math.cos(Math.toRadians(theta * 1.0)) * d).intValue();
+                        int dy = new Double(Math.sin(Math.toRadians(theta * 1.0)) * d).intValue();
+
+                        Point newPont = new Point(parentNode.getNodeX() + dx, parentNode.getNodeY() + dy);
+
+                        newNode.setLocation(newPont);
+
+                        newNode.update(newPont, newNode.getDimension());
+                    }
+
+
+                    Node forError = new Node(-1, "", 0, 0, 0, 0, Color.white, -1, null, jSplitPaneTest, myAttributePane); //애는 그 마지막 노드 사이즈 개떡같이 나오는 부분 처리 해주는 애에요
+                    forError.setOpaque(false);
+                    forError.setVisible(false);
+
+                    myMindMapPane.addNode(newNode);
+
+                    myMindMapPane.addNode(forError);
+
+                }
+            }
+
+        }
+
+
+//        System.out.println("end");
 
 
     }
@@ -240,10 +250,10 @@ public class MyTextEditorPane extends JPanel {
         int i = 0;
         int level = 0;
         while (true) {
-            if (str.charAt(i) != ' ') {
+            if (str.charAt(i) != '\t') {
                 break;
             } else {
-                i += 4;
+                i += 1;
                 level += 1;
             }
         }

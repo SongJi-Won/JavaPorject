@@ -10,6 +10,12 @@ public class MyAttributePane extends JPanel {
     private JLabel title;
 
     private MyAttribute text;
+//    private MyAttribute attributeX;
+//    private MyAttribute attributeY;
+//    private MyAttribute attributeW;
+//    private MyAttribute attributeH;
+//    private MyAttribute attributeColor;
+
     private MyAttribute x;
     private MyAttribute y;
     private MyAttribute w;
@@ -18,12 +24,10 @@ public class MyAttributePane extends JPanel {
 
     private JButton changeBtn;
 
-    private JSplitPaneTest jSplitPaneTest;
     private Node selectedNode;
 
     public MyAttributePane(JSplitPaneTest jSplitPaneTest)
     {
-        this.jSplitPaneTest = jSplitPaneTest;
 
 
         title = new JLabel("Attribute Pane");
@@ -69,11 +73,6 @@ public class MyAttributePane extends JPanel {
             int getW = Integer.parseInt(w.getAttrValue().getText());
             int getH = Integer.parseInt(h.getAttrValue().getText());
             String getCOLOR = color.getAttrValue().getText().toUpperCase();
-            System.out.println("이상덕 getCOLOR : " + getCOLOR);
-
-            System.out.println("이상덕 getCOLOR.substring(0,2) : [" + getCOLOR.substring(0, 2)+"]");
-            System.out.println("이상덕 getCOLOR.substring(0,2) : [" + getCOLOR.substring(2, 4)+"]");
-            System.out.println("이상덕 getCOLOR.substring(0,2) : [" + getCOLOR.substring(4, 6)+"]");
 
 
             red = Integer.parseInt(getCOLOR.substring(0,2), 16);

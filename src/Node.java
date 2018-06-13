@@ -23,6 +23,8 @@ public class Node extends JLabel {
 
 
     Node parent;
+
+    private double theta;
 //    Node child;
 
 
@@ -82,6 +84,8 @@ public class Node extends JLabel {
         this.level = level;
 
         this.parent = parent;
+
+        this.theta = Math.PI;
 
         this.jSplitPaneTest = jSplitPaneTest;
 
@@ -144,37 +148,6 @@ public class Node extends JLabel {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void setParent(Node parent) {
-
-        this.parent = parent;
-    }
-
-
     public int getId() {
         return id;
     }
@@ -213,11 +186,15 @@ public class Node extends JLabel {
         return color;
     }
 
-    public Node getParentNode() { return parent; }
+    public Node getParentNode() {
+        return parent;
+    }
 
+    public double getTheta() { return theta; }
 
-
-
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
 
     public void setNodeX(int nodeX) {
         this.nodeX = nodeX;
@@ -237,8 +214,7 @@ public class Node extends JLabel {
 
     public void setColor(Color color) { this.color = color; }
 
-
-
+    public void setTheta(double theta) { this.theta = theta; }
 
     public void update(Point point, Dimension dimension) {
         this.point = point;
@@ -391,10 +367,10 @@ public class Node extends JLabel {
                 switch (type) {
 
                     case Cursor.W_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.W_RESIZE_CURSOR");
+                        //System.out.println("송지원 : mouseDragged() 호출3 : Cursor.W_RESIZE_CURSOR");
                         dx = p.x - nodeX;
                         dy = 0;
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                        //System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW + nodeX - p.x;
                         newHeight = nodeH;
                         component.setLocation(new Point(p.x, nodeY));
@@ -404,10 +380,10 @@ public class Node extends JLabel {
 
 
                     case Cursor.N_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.N_RESIZE_CURSOR");
+                        //System.out.println("송지원 : mouseDragged() 호출3 : Cursor.N_RESIZE_CURSOR");
                         dx = 0;
                         dy = p.y - nodeY;
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                        //System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW;
                         newHeight = nodeH + nodeY - p.y;
                         component.setLocation(new Point(nodeX, p.y));
@@ -419,7 +395,7 @@ public class Node extends JLabel {
                     case Cursor.E_RESIZE_CURSOR:
                         dx = p.x - (nodeX + nodeW);
                         dy = 0;
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                        //System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = p.x - nodeX;
                         newHeight = nodeH;
                         component.setLocation(new Point(nodeX, nodeY));
@@ -428,10 +404,10 @@ public class Node extends JLabel {
                         break;
 
                     case Cursor.S_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.S_RESIZE_CURSOR");
+                        //System.out.println("송지원 : mouseDragged() 호출3 : Cursor.S_RESIZE_CURSOR");
                         dx = 0;
                         dy = p.y - (nodeY + nodeH);
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                        //System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW;
                         newHeight = p.y - nodeY;
                         component.setLocation(new Point(nodeX, nodeY));
@@ -441,10 +417,10 @@ public class Node extends JLabel {
 
 
                     case Cursor.NW_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.NW_RESIZE_CURSOR");
+                        //System.out.println("송지원 : mouseDragged() 호출3 : Cursor.NW_RESIZE_CURSOR");
                         dx = p.x - nodeX;
                         dy = p.y - nodeY;
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                        //System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW - dx;
                         newHeight = nodeH - dy;
                         component.setLocation(new Point(p.x, p.y));
@@ -453,10 +429,10 @@ public class Node extends JLabel {
                         break;
 
                     case Cursor.NE_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.NE_RESIZE_CURSOR");
+                        //System.out.println("송지원 : mouseDragged() 호출3 : Cursor.NE_RESIZE_CURSOR");
                         dx = p.x - (nodeX + nodeW);
                         dy = p.y - nodeY;
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                        //System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW + dx;
                         newHeight = nodeH - dy;
                         component.setLocation(new Point(nodeX, p.y));
@@ -465,10 +441,10 @@ public class Node extends JLabel {
                         break;
 
                     case Cursor.SE_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.SE_RESIZE_CURSOR");
+                        //System.out.println("송지원 : mouseDragged() 호출3 : Cursor.SE_RESIZE_CURSOR");
                         dx = p.x - (nodeX + nodeW);
                         dy = p.y - (nodeY + nodeH);
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                        //System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW + dx;
                         newHeight = nodeH + dy;
                         component.setLocation(new Point(nodeX, nodeY));
@@ -478,10 +454,10 @@ public class Node extends JLabel {
 
                     case Cursor.SW_RESIZE_CURSOR:
 
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.SW_RESIZE_CURSOR");
+                        //System.out.println("송지원 : mouseDragged() 호출3 : Cursor.SW_RESIZE_CURSOR");
                         dx = p.x - nodeX;
                         dy = p.y - (nodeY + nodeH);
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                        //System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW - dx;
                         newHeight = nodeH + dy;
                         component.setLocation(new Point(p.x, nodeY));
@@ -521,56 +497,56 @@ public class Node extends JLabel {
             switch (outcode) {
 
                 case Rectangle.OUT_TOP:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_TOP (p2.y-nodeY):" + (p2.y - nodeY));
+                    //System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_TOP (p2.y-nodeY):" + (p2.y - nodeY));
                     if (Math.abs(p2.y - nodeY) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_TOP + Rectangle.OUT_LEFT:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_TOP + Node.OUT_LEFT (p2.y - nodeY):" + (p2.y - nodeY) + " (p2.x - nodeX):" + (p2.x - nodeX));
+                    //System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_TOP + Node.OUT_LEFT (p2.y - nodeY):" + (p2.y - nodeY) + " (p2.x - nodeX):" + (p2.x - nodeX));
                     if (Math.abs(p2.y - nodeY) < PROX_DIST && Math.abs(p2.x - nodeX) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_LEFT:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_LEFT (p2.x - nodeX):" + (p2.x - nodeX));
+                    //System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_LEFT (p2.x - nodeX):" + (p2.x - nodeX));
                     if (Math.abs(p2.x - nodeX) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_LEFT + Rectangle.OUT_BOTTOM:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_LEFT + Node.OUT_BOTTOM (p2.x - nodeX):" + (p2.x - nodeX) + " (p2.y - (nodeY + nodeH)):" + (p2.y - (nodeY + nodeH)));
+                    //System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_LEFT + Node.OUT_BOTTOM (p2.x - nodeX):" + (p2.x - nodeX) + " (p2.y - (nodeY + nodeH)):" + (p2.y - (nodeY + nodeH)));
                     if (Math.abs(p2.x - nodeX) < PROX_DIST && Math.abs(p2.y - (nodeY + nodeH)) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.SW_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_BOTTOM:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_BOTTOM (p.y - (nodeY + nodeH)):" + (p2.y - (nodeY + nodeH)));
+                    //System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_BOTTOM (p.y - (nodeY + nodeH)):" + (p2.y - (nodeY + nodeH)));
                     if (Math.abs(p2.y - (nodeY + nodeH)) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_BOTTOM + Rectangle.OUT_RIGHT:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_BOTTOM + Node.OUT_RIGHT (p2.x - (nodeX + nodeW)):" + (p2.x - (nodeX + nodeW)) + " (p2.y - (nodeY + nodeH)):" + (p2.y - (nodeY + nodeH)));
+                    //System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_BOTTOM + Node.OUT_RIGHT (p2.x - (nodeX + nodeW)):" + (p2.x - (nodeX + nodeW)) + " (p2.y - (nodeY + nodeH)):" + (p2.y - (nodeY + nodeH)));
                     if (Math.abs(p2.x - (nodeX + nodeW)) < PROX_DIST && Math.abs(p2.y - (nodeY + nodeH)) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_RIGHT:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_RIGHT (p2.x - (nodeX + nodeW)):" + (p2.x - (nodeX + nodeW)));
+                    //System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_RIGHT (p2.x - (nodeX + nodeW)):" + (p2.x - (nodeX + nodeW)));
                     if (Math.abs(p2.x - (nodeX + nodeW)) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_RIGHT + Rectangle.OUT_TOP:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_RIGHT + Node.OUT_TOP (p2.x - (nodeX + nodeW))" + (p2.x - (nodeX + nodeW)) + " (p2.y - nodeY):" + (p2.y - nodeY));
+                    //System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_RIGHT + Node.OUT_TOP (p2.x - (nodeX + nodeW))" + (p2.x - (nodeX + nodeW)) + " (p2.y - nodeY):" + (p2.y - nodeY));
                     if (Math.abs(p2.x - (nodeX + nodeW)) < PROX_DIST && Math.abs(p2.y - nodeY) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR));
                     }

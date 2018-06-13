@@ -36,7 +36,7 @@ public class JSplitPaneTest extends JFrame {
     private JButton applyToolBtn;
     private JButton changeToolBtn;
 
-
+    private SaveHelper[] saveHelpers;
 
 
 
@@ -66,28 +66,31 @@ public class JSplitPaneTest extends JFrame {
 
         JScrollPane jScrollTextArea = new JScrollPane(myTextEditorPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        jScrollTextArea.setSize(new Dimension(300, 800));
-        jScrollTextArea.setMinimumSize(new Dimension(300, 800));
+//        jScrollTextArea.setSize(new Dimension(300, 800));
+//        jScrollTextArea.setMinimumSize(new Dimension(300, 800));
 
         JScrollPane jScrollMindMap = new JScrollPane(myMindMapPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        jScrollMindMap.setSize(new Dimension(800, 800));
-        jScrollMindMap.setMinimumSize(new Dimension(800, 800));
+//        jScrollMindMap.setSize(new Dimension(800, 800));
+//        jScrollMindMap.setMinimumSize(new Dimension(800, 800));
+//        jScrollMindMap.setPreferredSize(new Dimension(800, 800));
 
         JScrollPane jScrollAttribute = new JScrollPane(myAttributePane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        jScrollAttribute.setSize(new Dimension(300, 800));
-        jScrollAttribute.setMinimumSize(new Dimension(300,800));
+//        jScrollAttribute.setSize(new Dimension(300, 800));
+//        jScrollAttribute.setMinimumSize(new Dimension(300,800));
 
 
         JSplitPane jSplitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollMindMap, jScrollAttribute);
-        jSplitPane1.setResizeWeight(0.8);
+        jSplitPane1.setResizeWeight(0.99);
+//        jSplitPane1.setDividerLocation(800);
         jSplitPane1.setLeftComponent(jScrollMindMap);
         jSplitPane1.setRightComponent(jScrollAttribute);
 
 
         JSplitPane jSplitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollTextArea, jSplitPane1);
-        jSplitPane2.setResizeWeight(0.3);
+        jSplitPane2.setResizeWeight(0.01);
+//        jSplitPane1.setDividerLocation(300);
         jSplitPane2.setLeftComponent(jScrollTextArea);
         jSplitPane2.setRightComponent(jSplitPane1);
 
@@ -157,6 +160,7 @@ public class JSplitPaneTest extends JFrame {
         this.add(jToolBar, "North");
         this.add(jSplitPane2, "Center");
         setSize(1400, 800);
+
         setVisible(true);
 
     }
@@ -193,28 +197,22 @@ public class JSplitPaneTest extends JFrame {
 
         JScrollPane jScrollTextArea = new JScrollPane(myTextEditorPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        jScrollTextArea.setSize(new Dimension(300, 800));
-        jScrollTextArea.setMinimumSize(new Dimension(300, 800));
 
         JScrollPane jScrollMindMap = new JScrollPane(myMindMapPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        jScrollMindMap.setSize(new Dimension(800, 800));
-        jScrollMindMap.setMinimumSize(new Dimension(800, 800));
 
         JScrollPane jScrollAttribute = new JScrollPane(myAttributePane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        jScrollAttribute.setSize(new Dimension(300, 800));
-        jScrollAttribute.setMinimumSize(new Dimension(300,800));
 
 
         JSplitPane jSplitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollMindMap, jScrollAttribute);
-        jSplitPane1.setResizeWeight(0.8);
+        jSplitPane1.setResizeWeight(0.99);
         jSplitPane1.setLeftComponent(jScrollMindMap);
         jSplitPane1.setRightComponent(jScrollAttribute);
 
 
         JSplitPane jSplitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollTextArea, jSplitPane1);
-        jSplitPane2.setResizeWeight(0.3);
+        jSplitPane2.setResizeWeight(0.01);
         jSplitPane2.setLeftComponent(jScrollTextArea);
         jSplitPane2.setRightComponent(jSplitPane1);
 
@@ -394,6 +392,41 @@ public class JSplitPaneTest extends JFrame {
             else if (e.getSource() == saveMenuItem) {
 
                 //저장하는 코드
+                Component[] components = myMindMapPane.getComponents();
+                saveHelpers = new SaveHelper[components.length];
+
+                int id;
+                String text;
+                int nodeX;
+                int nodeY;
+                int nodeW;
+                int nodeH;
+                Point point;
+                Dimension dimension;
+                Color color;
+                int level;
+                Node parent;
+
+                Node temp;
+
+                for (int i=0; i<components.length; i++) {
+
+                    temp = (Node)components[i];
+                    id = temp.getId();
+                    text = temp.getText();
+                    nodeX = temp.getNodeX();
+                    nodeY = temp.getNodeY();
+                    nodeW = temp.getNodeW();
+                    nodeH = temp.getNodeH();
+                    point = temp.getPoint();
+                    dimension = temp.getDimension();
+                    color = temp.getColor();
+                    level = temp.getLevel();
+                    parent = temp.getParentNode();
+
+                    saveHelpers[i] = new SaveHelper(id, text, nodeX, nodeY, nodeW, nodeH, color, level, parent.getId());
+
+                }
             }
             else if (e.getSource() == anotherNameSaveMenuItem) {
 
@@ -449,6 +482,40 @@ public class JSplitPaneTest extends JFrame {
             else if (e.getSource() == saveToolBtn) {
 
                 //저장하는 코드
+                Component[] components = myMindMapPane.getComponents();
+                saveHelpers = new SaveHelper[components.length];
+
+                int id;
+                String text;
+                int nodeX;
+                int nodeY;
+                int nodeW;
+                int nodeH;
+                Point point;
+                Dimension dimension;
+                Color color;
+                int level;
+                Node parent;
+
+                Node temp;
+
+                for (int i=0; i<components.length; i++) {
+
+                    temp = (Node) components[i];
+                    id = temp.getId();
+                    text = temp.getText();
+                    nodeX = temp.getNodeX();
+                    nodeY = temp.getNodeY();
+                    nodeW = temp.getNodeW();
+                    nodeH = temp.getNodeH();
+                    point = temp.getPoint();
+                    dimension = temp.getDimension();
+                    color = temp.getColor();
+                    level = temp.getLevel();
+                    parent = temp.getParentNode();
+
+                    saveHelpers[i] = new SaveHelper(id, text, nodeX, nodeY, nodeW, nodeH, color, level, parent.getId());
+                }
             }
             else if (e.getSource() == anotherNameSaveToolBtn) {
 
