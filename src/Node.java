@@ -5,53 +5,54 @@ import java.awt.event.*;
 
 public class Node extends JLabel {
 
-    private int id;
+    private  int id;
 
-    private String text;
-    private int nodeX;
-    private int nodeY;
-    private Point point;
-
-    private int nodeW;
-    private int nodeH;
-    private Dimension dimension;
+    private   String textOfNode;
+    private  int nodeX;
+    private  int nodeY;
+    private   Point point;
 
 
-    private Color color;
-
-    private int level;
-
-
-    Node parent;
-//    Node child;
+    private  int nodeW;
+    private  int nodeH;
+    private  Dimension dimension;
 
 
+    private  Color color;
 
-    private MyAttributePane parentAttributePane;
+    private  int level;
 
 
-    public Node(int id, String text, int x, int y, int w, int h, Color color, int level, Node parent, Node child) {
-        super(text);
-        this.id = id;
+    private transient Node  parent;
+    private transient Node child;
 
-        this.text = text;
 
-        this.nodeX = x;
-        this.nodeY = y;
-        this.point = new Point(x, y);
 
-        this.nodeW = w;
-        this.nodeH = h;
-        this.dimension = new Dimension(w, h);
+    private   MyAttributePane parentAttributePane;
 
-        this.level = level;
 
-        //this.color = 레벨에 따른 다른 색상 넣기
-        this.color = color;
-
-        this.parent = parent;
-
-    }
+//    public Node(int id, String text, int x, int y, int w, int h, Color color, int level, Node parent, Node child) {
+//        super(text);
+//        this.id = id;
+//
+//        this.textOfNode = text;
+//
+//        this.nodeX = x;
+//        this.nodeY = y;
+//        this.point = new Point(x, y);
+//
+//        this.nodeW = w;
+//        this.nodeH = h;
+//        this.dimension = new Dimension(w, h);
+//
+//        this.level = level;
+//
+//        //this.color = 레벨에 따른 다른 색상 넣기
+//        this.color = color;
+//
+//        this.parent = parent;
+//
+//    }
 
 
     public Node(int id, String text, int x, int y, int w, int h, Color color, int level, Node parent, MyAttributePane myAttributePane) {
@@ -62,7 +63,7 @@ public class Node extends JLabel {
 
         this.id = id;
 
-        this.text = text;
+        this.textOfNode = text;
 
         this.nodeX = x;
         this.nodeY = y;
@@ -100,42 +101,42 @@ public class Node extends JLabel {
 
 
 
-    public Node(int id, String text, int x, int y, int w, int h, Color color, int level) {
-        super(text);
-        this.setMinimumSize(new Dimension(300, 100));//송지원 이거 적용안되는듯...;;
-        this.setHorizontalAlignment(CENTER);
-
-        this.id = id;
-
-        this.text = text;
-
-        this.nodeX = x;
-        this.nodeY = y;
-        this.point = new Point(x, y);
-        setLocation(this.point);
-
-
-        this.nodeW = w;
-        this.nodeH = h;
-        this.dimension = new Dimension(w, h);
-        setSize(this.dimension);
-
-        this.level = level;
-
-        //this.color = 레벨에 따른 다른 색상 넣기
-        this.color = color;
-        this.setBackground(this.color);
-
-
-
-        setFont(new Font("돋움", Font.BOLD, 20));
-        setOpaque(true);
-
-
-        NodeResizeAdapter r = new NodeResizeAdapter(this);
-        this.addMouseMotionListener(r);
-        this.addMouseListener(r);
-        }
+//    public Node(int id, String text, int x, int y, int w, int h, Color color, int level) {
+//        super(text);
+//        this.setMinimumSize(new Dimension(300, 100));//송지원 이거 적용안되는듯...;;
+//        this.setHorizontalAlignment(CENTER);
+//
+//        this.id = id;
+//
+//        this.textOfNode = text;
+//
+//        this.nodeX = x;
+//        this.nodeY = y;
+//        this.point = new Point(x, y);
+//        setLocation(this.point);
+//
+//
+//        this.nodeW = w;
+//        this.nodeH = h;
+//        this.dimension = new Dimension(w, h);
+//        setSize(this.dimension);
+//
+//        this.level = level;
+//
+//        //this.color = 레벨에 따른 다른 색상 넣기
+//        this.color = color;
+//        this.setBackground(this.color);
+//
+//
+//
+//        setFont(new Font("돋움", Font.BOLD, 20));
+//        setOpaque(true);
+//
+//
+//        NodeResizeAdapter r = new NodeResizeAdapter(this);
+//        this.addMouseMotionListener(r);
+//        this.addMouseListener(r);
+//        }
 
 
 
@@ -260,7 +261,7 @@ public class Node extends JLabel {
             String colorcode;
 
             parentAttributePane.setSelectedNode((Node)e.getSource());
-            parentAttributePane.getTextAttribute().setAttrValue(component.text);
+            parentAttributePane.getTextAttribute().setAttrValue(component.textOfNode);
             parentAttributePane.getXAttribute().setAttrValue(""+component.getNodeX());
             parentAttributePane.getYAttribute().setAttrValue(""+component.getNodeY());
             parentAttributePane.getWAttribute().setAttrValue(""+component.getNodeW());
@@ -323,7 +324,7 @@ public class Node extends JLabel {
             String colorcode;
 
             parentAttributePane.setSelectedNode((Node)e.getSource());
-            parentAttributePane.getTextAttribute().setAttrValue(component.text);
+            parentAttributePane.getTextAttribute().setAttrValue(component.textOfNode);
             parentAttributePane.getXAttribute().setAttrValue(""+component.getNodeX());
             parentAttributePane.getYAttribute().setAttrValue(""+component.getNodeY());
             parentAttributePane.getWAttribute().setAttrValue(""+component.getNodeW());
@@ -351,10 +352,10 @@ public class Node extends JLabel {
                 switch (type) {
 
                     case Cursor.W_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.W_RESIZE_CURSOR");
+                      //  System.out.println("송지원 : mouseDragged() 호출3 : Cursor.W_RESIZE_CURSOR");
                         dx = p.x - nodeX;
                         dy = 0;
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                       // System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW + nodeX - p.x;
                         newHeight = nodeH;
                         component.setLocation(new Point(p.x, nodeY));
@@ -364,10 +365,10 @@ public class Node extends JLabel {
 
 
                     case Cursor.N_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.N_RESIZE_CURSOR");
+                     //   System.out.println("송지원 : mouseDragged() 호출3 : Cursor.N_RESIZE_CURSOR");
                         dx = 0;
                         dy = p.y - nodeY;
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                     //   System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW;
                         newHeight = nodeH + nodeY - p.y;
                         component.setLocation(new Point(nodeX, p.y));
@@ -379,7 +380,7 @@ public class Node extends JLabel {
                     case Cursor.E_RESIZE_CURSOR:
                         dx = p.x - (nodeX + nodeW);
                         dy = 0;
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                      //  System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = p.x - nodeX;
                         newHeight = nodeH;
                         component.setLocation(new Point(nodeX, nodeY));
@@ -388,10 +389,10 @@ public class Node extends JLabel {
                         break;
 
                     case Cursor.S_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.S_RESIZE_CURSOR");
+                    //    System.out.println("송지원 : mouseDragged() 호출3 : Cursor.S_RESIZE_CURSOR");
                         dx = 0;
                         dy = p.y - (nodeY + nodeH);
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                      //  System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW;
                         newHeight = p.y - nodeY;
                         component.setLocation(new Point(nodeX, nodeY));
@@ -401,10 +402,10 @@ public class Node extends JLabel {
 
 
                     case Cursor.NW_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.NW_RESIZE_CURSOR");
+                     //   System.out.println("송지원 : mouseDragged() 호출3 : Cursor.NW_RESIZE_CURSOR");
                         dx = p.x - nodeX;
                         dy = p.y - nodeY;
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                    //   System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW - dx;
                         newHeight = nodeH - dy;
                         component.setLocation(new Point(p.x, p.y));
@@ -413,10 +414,10 @@ public class Node extends JLabel {
                         break;
 
                     case Cursor.NE_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.NE_RESIZE_CURSOR");
+                      //  System.out.println("송지원 : mouseDragged() 호출3 : Cursor.NE_RESIZE_CURSOR");
                         dx = p.x - (nodeX + nodeW);
                         dy = p.y - nodeY;
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                     //   System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW + dx;
                         newHeight = nodeH - dy;
                         component.setLocation(new Point(nodeX, p.y));
@@ -425,10 +426,10 @@ public class Node extends JLabel {
                         break;
 
                     case Cursor.SE_RESIZE_CURSOR:
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.SE_RESIZE_CURSOR");
+                     //   System.out.println("송지원 : mouseDragged() 호출3 : Cursor.SE_RESIZE_CURSOR");
                         dx = p.x - (nodeX + nodeW);
                         dy = p.y - (nodeY + nodeH);
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                     //   System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW + dx;
                         newHeight = nodeH + dy;
                         component.setLocation(new Point(nodeX, nodeY));
@@ -437,11 +438,10 @@ public class Node extends JLabel {
                         break;
 
                     case Cursor.SW_RESIZE_CURSOR:
-
-                        System.out.println("송지원 : mouseDragged() 호출3 : Cursor.SW_RESIZE_CURSOR");
+                     //   System.out.println("송지원 : mouseDragged() 호출3 : Cursor.SW_RESIZE_CURSOR");
                         dx = p.x - nodeX;
                         dy = p.y - (nodeY + nodeH);
-                        System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
+                      //  System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW - dx;
                         newHeight = nodeH + dy;
                         component.setLocation(new Point(p.x, nodeY));
@@ -481,56 +481,56 @@ public class Node extends JLabel {
             switch (outcode) {
 
                 case Rectangle.OUT_TOP:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_TOP (p2.y-nodeY):" + (p2.y - nodeY));
+                   // System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_TOP (p2.y-nodeY):" + (p2.y - nodeY));
                     if (Math.abs(p2.y - nodeY) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_TOP + Rectangle.OUT_LEFT:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_TOP + Node.OUT_LEFT (p2.y - nodeY):" + (p2.y - nodeY) + " (p2.x - nodeX):" + (p2.x - nodeX));
+                   // System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_TOP + Node.OUT_LEFT (p2.y - nodeY):" + (p2.y - nodeY) + " (p2.x - nodeX):" + (p2.x - nodeX));
                     if (Math.abs(p2.y - nodeY) < PROX_DIST && Math.abs(p2.x - nodeX) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_LEFT:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_LEFT (p2.x - nodeX):" + (p2.x - nodeX));
+                   // System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_LEFT (p2.x - nodeX):" + (p2.x - nodeX));
                     if (Math.abs(p2.x - nodeX) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_LEFT + Rectangle.OUT_BOTTOM:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_LEFT + Node.OUT_BOTTOM (p2.x - nodeX):" + (p2.x - nodeX) + " (p2.y - (nodeY + nodeH)):" + (p2.y - (nodeY + nodeH)));
+                   // System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_LEFT + Node.OUT_BOTTOM (p2.x - nodeX):" + (p2.x - nodeX) + " (p2.y - (nodeY + nodeH)):" + (p2.y - (nodeY + nodeH)));
                     if (Math.abs(p2.x - nodeX) < PROX_DIST && Math.abs(p2.y - (nodeY + nodeH)) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.SW_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_BOTTOM:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_BOTTOM (p.y - (nodeY + nodeH)):" + (p2.y - (nodeY + nodeH)));
+                   // System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_BOTTOM (p.y - (nodeY + nodeH)):" + (p2.y - (nodeY + nodeH)));
                     if (Math.abs(p2.y - (nodeY + nodeH)) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_BOTTOM + Rectangle.OUT_RIGHT:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_BOTTOM + Node.OUT_RIGHT (p2.x - (nodeX + nodeW)):" + (p2.x - (nodeX + nodeW)) + " (p2.y - (nodeY + nodeH)):" + (p2.y - (nodeY + nodeH)));
+                  //  System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_BOTTOM + Node.OUT_RIGHT (p2.x - (nodeX + nodeW)):" + (p2.x - (nodeX + nodeW)) + " (p2.y - (nodeY + nodeH)):" + (p2.y - (nodeY + nodeH)));
                     if (Math.abs(p2.x - (nodeX + nodeW)) < PROX_DIST && Math.abs(p2.y - (nodeY + nodeH)) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_RIGHT:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_RIGHT (p2.x - (nodeX + nodeW)):" + (p2.x - (nodeX + nodeW)));
+                   // System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_RIGHT (p2.x - (nodeX + nodeW)):" + (p2.x - (nodeX + nodeW)));
                     if (Math.abs(p2.x - (nodeX + nodeW)) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
                     }
                     break;
 
                 case Rectangle.OUT_RIGHT + Rectangle.OUT_TOP:
-                    System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_RIGHT + Node.OUT_TOP (p2.x - (nodeX + nodeW))" + (p2.x - (nodeX + nodeW)) + " (p2.y - nodeY):" + (p2.y - nodeY));
+                   // System.out.println("송지원 : mouseMoved() 호출4 Node.OUT_RIGHT + Node.OUT_TOP (p2.x - (nodeX + nodeW))" + (p2.x - (nodeX + nodeW)) + " (p2.y - nodeY):" + (p2.y - nodeY));
                     if (Math.abs(p2.x - (nodeX + nodeW)) < PROX_DIST && Math.abs(p2.y - nodeY) < PROX_DIST) {
                         component.setCursor(Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR));
                     }

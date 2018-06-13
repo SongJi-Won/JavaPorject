@@ -1,16 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import com.google.gson.Gson;
 
 public class JSplitPaneTest extends JFrame {
 
-    private MyTextEditorPane myTextEditorPane;
-    private MyMindMapPane myMindMapPane;
-    private MyAttributePane myAttributePane;
+    private transient MyTextEditorPane myTextEditorPane;
+    private transient MyMindMapPane myMindMapPane;
+    private transient MyAttributePane myAttributePane;
 
-    private SplitPaneMouseListener splitPaneMouseListener;
+    private transient SplitPaneMouseListener splitPaneMouseListener;
 
-    private Node clickedNode;
+    private transient Node clickedNode;
 
 
     public JSplitPaneTest()
@@ -19,15 +20,16 @@ public class JSplitPaneTest extends JFrame {
 
         myMindMapPane = new MyMindMapPane();
         myAttributePane = new MyAttributePane(this);
-       // myTextEditorPane = new MyTextEditorPane(myMindMapPane, myAttributePane, this.getWidth()/2, this.getHeight()/2);
-       myTextEditorPane = new MyTextEditorPane(myMindMapPane, myAttributePane, 500, 500);
+        myTextEditorPane = new MyTextEditorPane(myMindMapPane, myAttributePane, 500, 500);
 
         this.clickedNode = null;
 
         splitPaneMouseListener = new SplitPaneMouseListener();
 
+//        Node newNode = new Node(-3, "test", 0, 0, 300, 100, Color.pink, 0, null, myAttributePane); //여기세 rootNode 부분에 새로 생성하는 노드 newNode의 부모 노드 객체 넣어줘야 해요!
+//        Gson gson = new Gson();
+//        String json = gson.toJson(newNode);
         Node forError = new Node(0, "", 0, 0, 0, 0, Color.white, 0, null, myAttributePane);
-
         myMindMapPane.addNode(forError);
         myMindMapPane.remove(forError);
 

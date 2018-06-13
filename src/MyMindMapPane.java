@@ -265,17 +265,6 @@ public class MyMindMapPane extends JPanel {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     class MyContainerAdapter extends ContainerAdapter {
 
         MyMindMapPane myMindMapPane;

@@ -9,28 +9,28 @@ public class MyAttributePane extends JPanel {
 
     private JLabel title;
 
-    private MyAttribute text;
-    private MyAttribute x;
-    private MyAttribute y;
-    private MyAttribute w;
-    private MyAttribute h;
-    private MyAttribute color;
+    private  MyAttribute text;
+    private  MyAttribute attributeX;
+    private  MyAttribute attributeY;
+    private  MyAttribute w;
+    private  MyAttribute h;
+    private  MyAttribute color;
 
     private JButton changeBtn;
 
-    private JSplitPaneTest jSplitPaneTest;
+    //private JSplitPaneTest jSplitPaneTest;
     private Node selectedNode;
 
     public MyAttributePane(JSplitPaneTest jSplitPaneTest)
     {
-        this.jSplitPaneTest = jSplitPaneTest;
+        //this.jSplitPaneTest = jSplitPaneTest;
 
 
         title = new JLabel("Attribute Pane");
 
         text = new MyAttribute("   TEXT", "None", false);
-        x = new MyAttribute("      X", "0", true);
-        y = new MyAttribute("      Y", "0", true);
+        attributeX = new MyAttribute("      X", "0", true);
+        attributeY = new MyAttribute("      Y", "0", true);
         w = new MyAttribute("      W", "0", true);
         h = new MyAttribute("      H", "0", true);
         color = new MyAttribute("COLOR", "0", true);
@@ -44,8 +44,8 @@ public class MyAttributePane extends JPanel {
 
         this.add(title);
         this.add(text);
-        this.add(x);
-        this.add(y);
+        this.add(attributeX);
+        this.add(attributeY);
         this.add(w);
         this.add(h);
         this.add(color);
@@ -64,8 +64,8 @@ public class MyAttributePane extends JPanel {
             int green;
             int blue;
 
-            int getX = Integer.parseInt(x.getAttrValue().getText());
-            int getY = Integer.parseInt(y.getAttrValue().getText());
+            int getX = Integer.parseInt(attributeX.getAttrValue().getText());
+            int getY = Integer.parseInt(attributeY.getAttrValue().getText());
             int getW = Integer.parseInt(w.getAttrValue().getText());
             int getH = Integer.parseInt(h.getAttrValue().getText());
             String getCOLOR = color.getAttrValue().getText().toUpperCase();
@@ -102,12 +102,12 @@ public class MyAttributePane extends JPanel {
 
 
     public MyAttribute getXAttribute() {
-        return x;
+        return attributeX;
     }
 
 
     public MyAttribute getYAttribute() {
-        return y;
+        return attributeY;
     }
 
     public MyAttribute getWAttribute() {
