@@ -24,8 +24,10 @@ public class MyTextEditorPane extends JPanel {
     private   JTextArea textArea;
     private   JButton applyBtn;
 
-    private   MyMindMapPane myMindMapPane;
-    private   MyAttributePane myAttributePane;
+
+    private JSplitPaneTest jSplitPaneTest;
+    private MyMindMapPane myMindMapPane;
+    private MyAttributePane myAttributePane;
 
     private    ApplyButtonListener applyButtonListener;
 
@@ -34,7 +36,7 @@ public class MyTextEditorPane extends JPanel {
     private   int centerX;
     private   int centerY;
 
-    public MyTextEditorPane(MyMindMapPane myMindMapPane, MyAttributePane myAttributePane, int centerX, int centerY) {
+    public MyTextEditorPane(JSplitPaneTest jSplitPaneTest, MyMindMapPane myMindMapPane, MyAttributePane myAttributePane, int centerX, int centerY) {
         title = new JLabel("Text Label Pane");
 
         textArea = new JTextArea(20, 14);
@@ -42,6 +44,7 @@ public class MyTextEditorPane extends JPanel {
 
         applyBtn = new JButton("적용");
 
+        this.jSplitPaneTest = jSplitPaneTest;
         this.myMindMapPane = myMindMapPane;
         this.myAttributePane = myAttributePane;
 
@@ -73,8 +76,6 @@ public class MyTextEditorPane extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-
-           // double d;
             String input = textArea.getText();
             parseToTree(input);
 
@@ -130,7 +131,7 @@ public class MyTextEditorPane extends JPanel {
             levelArr[i] = depth;
 
             background = colorSelectFromLevel(depth);
-            Node newNode = new Node(id++, temp[i], centerX, centerY, 300, 100, background, depth, null, myAttributePane); //여기세 rootNode 부분에 새로 생성하는 노드 newNode의 부모 노드 객체 넣어줘야 해요!
+            Node newNode = new Node(id++, temp[i], centerX, centerY, 300, 100, background, depth, null, jSplitPaneTest, myAttributePane); //여기세 rootNode 부분에 새로 생성하는 노드 newNode의 부모 노드 객체 넣어줘야 해요!
             nodeArr[i] = newNode;  // parent 설정을 위해 배열에 넣어줌
 
             if (depth > 0) {
@@ -171,7 +172,7 @@ public class MyTextEditorPane extends JPanel {
             }
 
 
-            Node forError = new Node(-1, "", 0,0,0,0,Color.white,-1, null, myAttributePane); //애는 그 마지막 노드 사이즈 개떡같이 나오는 부분 처리 해주는 애에요
+            Node forError = new Node(-1, "", 0,0,0,0,Color.white,-1, null,jSplitPaneTest, myAttributePane); //애는 그 마지막 노드 사이즈 개떡같이 나오는 부분 처리 해주는 애에요
            // System.out.println(newNode);
 
 
