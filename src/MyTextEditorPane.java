@@ -17,6 +17,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.Random;
+import java.util.stream.StreamSupport;
 
 
 public class MyTextEditorPane extends JPanel {
@@ -86,11 +87,9 @@ public class MyTextEditorPane extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
             String input = textArea.getText();
-            parseToTree(input);
+
             centerX = jPanel.getWidth() / 2;
             centerY = jPanel.getHeight() / 2;
-//            System.out.println("centerX :" + centerX + " / centerY :" + centerY);
-
             parseToTree(input);
 
         }
@@ -158,12 +157,14 @@ public class MyTextEditorPane extends JPanel {
         int indexForLevelArray = 0;
         double d = 0;
 
+        Node rootNode = new Node(0, str.split("\n")[0], centerX, centerY, 90, 50, Color.gray, 0, null, jSplitPaneTest, myAttributePane); //가운데 루트 노드
+
+
         input = str.split("\n");
 
         for (int i = 0; i < input.length; i++) {
             tempNum = i; // 혹시 몰라서 쓰는 복사용 수
             temp[i] = str.split("\n")[i];
-            Node rootNode = new Node(0, temp[0], centerX, centerY, 90, 50, Color.pink, 0, null, jSplitPaneTest, myAttributePane); //가운데 루트 노드
             rootNode.setTheta(-1.0);
             d = Math.sqrt(rootNode.getNodeW() * rootNode.getNodeW() * 1.0 + 4 * rootNode.getNodeH() * rootNode.getNodeH() * 1.0); //루트 노드 기반으로 각 노드간 벌릴 거리 구하는 식
 
@@ -185,8 +186,6 @@ public class MyTextEditorPane extends JPanel {
             Node newNode = new Node(id++, temp[i], centerX, centerY, 90, 50, background, depth, null, jSplitPaneTest, myAttributePane); //여기세 rootNode 부분에 새로 생성하는 노드 newNode의 부모 노드 객체 넣어줘야 해요!
 
             nodeArr[i] = newNode;  // parent 설정을 위해 배열에 넣어줌
-
-            System.out.println("level : " + depth);
             if (depth > 0) {
 
                 if (depth == 1) {
@@ -221,7 +220,6 @@ public class MyTextEditorPane extends JPanel {
 
 
         for (int i = 0; i < nodeArr.length; i++) {
-
             Node newNode = nodeArr[i];
             if (newNode != null) {
                 Node parentNode = newNode.getParentNode();
@@ -241,28 +239,21 @@ public class MyTextEditorPane extends JPanel {
                         int dy = new Double(Math.sin(Math.toRadians(theta * 1.0)) * d).intValue();
 
                         Point newPont = new Point(parentNode.getNodeX() + dx, parentNode.getNodeY() + dy);
-
                         newNode.setLocation(newPont);
-
                         newNode.update(newPont, newNode.getDimension());
                     }
 
-
-                    Node forError = new Node(-1, "", 0, 0, 0, 0, Color.white, -1, null, jSplitPaneTest, myAttributePane); //애는 그 마지막 노드 사이즈 개떡같이 나오는 부분 처리 해주는 애에요
+                    Node forError = new Node(-1, "", 0, 0, 0, 0, Color.white, -1, rootNode, jSplitPaneTest, myAttributePane); //애는 그 마지막 노드 사이즈 개떡같이 나오는 부분 처리 해주는 애에요
                     forError.setOpaque(false);
                     forError.setVisible(false);
-
                     myMindMapPane.addNode(newNode);
-
                     myMindMapPane.addNode(forError);
-
                 }
             }
-
         }
 
 
-//        System.out.println("end");
+      System.out.println("end");
 
 
     }

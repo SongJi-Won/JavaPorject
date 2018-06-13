@@ -314,10 +314,8 @@ public class Node extends JLabel {
 
                     case Cursor.W_RESIZE_CURSOR:
 
-                        //System.out.println("송지원 : mouseDragged() 호출3 : Cursor.W_RESIZE_CURSOR");
                         dx = p.x - nodeX;
                         dy = 0;
-                        //System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW + nodeX - p.x;
                         newHeight = nodeH;
                         component.setLocation(new Point(p.x, nodeY));
@@ -328,10 +326,8 @@ public class Node extends JLabel {
 
                     case Cursor.N_RESIZE_CURSOR:
 
-                        //System.out.println("송지원 : mouseDragged() 호출3 : Cursor.N_RESIZE_CURSOR");
                         dx = 0;
                         dy = p.y - nodeY;
-                        //System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW;
                         newHeight = nodeH + nodeY - p.y;
                         component.setLocation(new Point(nodeX, p.y));
@@ -364,10 +360,8 @@ public class Node extends JLabel {
 
                     case Cursor.NW_RESIZE_CURSOR:
 
-                        //System.out.println("송지원 : mouseDragged() 호출3 : Cursor.NW_RESIZE_CURSOR");
                         dx = p.x - nodeX;
                         dy = p.y - nodeY;
-                        //System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW - dx;
                         newHeight = nodeH - dy;
                         component.setLocation(new Point(p.x, p.y));
@@ -377,10 +371,8 @@ public class Node extends JLabel {
 
                     case Cursor.NE_RESIZE_CURSOR:
 
-                        //System.out.println("송지원 : mouseDragged() 호출3 : Cursor.NE_RESIZE_CURSOR");
                         dx = p.x - (nodeX + nodeW);
                         dy = p.y - nodeY;
-                        //System.out.println("\t\t송지원 : mouseDragged() 호출2.3 /dx" + dx + "/dy" + dy);
                         newWidth = nodeW + dx;
                         newHeight = nodeH - dy;
                         component.setLocation(new Point(nodeX, p.y));

@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import com.google.gson.Gson;
 import javax.swing.event.MenuEvent;
+import javax.swing.plaf.synth.SynthTextAreaUI;
 //import javax.swing.event.MenuListener;
 //import javax.swing.JToolBar;
 
@@ -51,8 +52,7 @@ public class JSplitPaneTest extends JFrame {
         myMindMapPane = new MyMindMapPane();
         myAttributePane = new MyAttributePane(this);
 
-//        myTextEditorPane = new MyTextEditorPane(this, myMindMapPane, myAttributePane, myMindMapPane.getWidth()/2, myMindMapPane.getHeight()/2);
-        myTextEditorPane = new MyTextEditorPane(this, myMindMapPane, myAttributePane/*, 350, 350*/);
+        myTextEditorPane = new MyTextEditorPane(this, myMindMapPane, myAttributePane);
 
         this.clickedNode = null;
 
@@ -73,24 +73,18 @@ public class JSplitPaneTest extends JFrame {
         JScrollPane jScrollTextArea = new JScrollPane(myTextEditorPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-//        jScrollTextArea.setSize(new Dimension(300, 800));
-//        jScrollTextArea.setMinimumSize(new Dimension(300, 800));
+
 
         JScrollPane jScrollMindMap = new JScrollPane(myMindMapPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-//        jScrollMindMap.setSize(new Dimension(800, 800));
-//        jScrollMindMap.setMinimumSize(new Dimension(800, 800));
-//        jScrollMindMap.setPreferredSize(new Dimension(800, 800));
+
 
         JScrollPane jScrollAttribute = new JScrollPane(myAttributePane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-//        jScrollAttribute.setSize(new Dimension(300, 800));
-//        jScrollAttribute.setMinimumSize(new Dimension(300,800));
 
 
         JSplitPane jSplitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jScrollMindMap, jScrollAttribute);
         jSplitPane1.setResizeWeight(0.99);
-//        jSplitPane1.setDividerLocation(800);
         jSplitPane1.setLeftComponent(jScrollMindMap);
         jSplitPane1.setRightComponent(jScrollAttribute);
 
@@ -398,7 +392,6 @@ public class JSplitPaneTest extends JFrame {
             }
             else if (e.getSource() == saveMenuItem) {
 
-                //저장하는 코드
                 Component[] components = myMindMapPane.getComponents();
                 saveHelpers = new SaveHelper[components.length];
 
@@ -415,25 +408,32 @@ public class JSplitPaneTest extends JFrame {
                 Node parent;
 
                 Node temp;
+                int index = 0;
 
                 for (int i=0; i<components.length; i++) {
 
-                    temp = (Node)components[i];
-                    id = temp.getId();
-                    text = temp.getText();
-                    nodeX = temp.getNodeX();
-                    nodeY = temp.getNodeY();
-                    nodeW = temp.getNodeW();
-                    nodeH = temp.getNodeH();
-                    point = temp.getPoint();
-                    dimension = temp.getDimension();
-                    color = temp.getColor();
-                    level = temp.getLevel();
-                    parent = temp.getParentNode();
+                    if (components[i] instanceof Node) {
 
-                    saveHelpers[i] = new SaveHelper(id, text, nodeX, nodeY, nodeW, nodeH, color, level, parent.getId());
+                        temp = (Node) components[i];
+                        id = temp.getId();
+                        text = temp.getText();
+                        nodeX = temp.getNodeX();
+                        nodeY = temp.getNodeY();
+                        nodeW = temp.getNodeW();
+                        nodeH = temp.getNodeH();
+                        point = temp.getPoint();
+                        dimension = temp.getDimension();
+                        color = temp.getColor();
+                        level = temp.getLevel();
+                        parent = temp.getParentNode();
+
+                        saveHelpers[index] = new SaveHelper(id, text, nodeX, nodeY, nodeW, nodeH, color, level, parent.getId());
+                        index++;
+                    }
 
                 }
+                System.out.println(saveHelpers);
+
             }
             else if (e.getSource() == anotherNameSaveMenuItem) {
 
@@ -465,7 +465,6 @@ public class JSplitPaneTest extends JFrame {
                     }
                 }
             }
-
         }
 
 
@@ -488,9 +487,8 @@ public class JSplitPaneTest extends JFrame {
                 //저장했던 파일 열기 하는 코드
             }
             else if (e.getSource() == saveToolBtn) {
-
-                //저장하는 코드
                 Component[] components = myMindMapPane.getComponents();
+
                 saveHelpers = new SaveHelper[components.length];
 
                 int id;
@@ -504,25 +502,40 @@ public class JSplitPaneTest extends JFrame {
                 Color color;
                 int level;
                 Node parent;
+                SaveHelper link;
 
                 Node temp;
+                int index = 0;
 
                 for (int i=0; i<components.length; i++) {
+                    if (components[i] instanceof Node) {
 
-                    temp = (Node) components[i];
-                    id = temp.getId();
-                    text = temp.getText();
-                    nodeX = temp.getNodeX();
-                    nodeY = temp.getNodeY();
-                    nodeW = temp.getNodeW();
-                    nodeH = temp.getNodeH();
-                    point = temp.getPoint();
-                    dimension = temp.getDimension();
-                    color = temp.getColor();
-                    level = temp.getLevel();
-                    parent = temp.getParentNode();
+                        temp = (Node) components[i];
+                        id = temp.getId();
+                        text = temp.getText();
+                        nodeX = temp.getNodeX();
+                        nodeY = temp.getNodeY();
+                        nodeW = temp.getNodeW();
+                        nodeH = temp.getNodeH();
+                        point = temp.getPoint();
+                        dimension = temp.getDimension();
+                        color = temp.getColor();
+                        level = temp.getLevel();
+                        parent = temp.getParentNode();
+                        System.out.println(id);
+                        System.out.println(text);
+                        System.out.println(nodeX);
+                        System.out.println(nodeY);
+                        System.out.println(nodeW);
+                        System.out.println(nodeH);
+                        link = new SaveHelper(id, text, nodeX, nodeY, nodeW, nodeH, color, level, parent.getId());
+                        saveHelpers[index] = link;
+                        index++;
+                        System.out.println(link);
 
-                    saveHelpers[i] = new SaveHelper(id, text, nodeX, nodeY, nodeW, nodeH, color, level, parent.getId());
+                    }
+                   // System.out.println(saveHelpers);
+
                 }
             }
             else if (e.getSource() == anotherNameSaveToolBtn) {
