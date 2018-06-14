@@ -2,10 +2,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import com.google.gson.Gson;
-import javax.swing.event.MenuEvent;
-import javax.swing.plaf.synth.SynthTextAreaUI;
-//import javax.swing.event.MenuListener;
-//import javax.swing.JToolBar;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.util.Iterator;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import com.google.gson.JsonParser;
+
+
+
+
 
 public class JSplitPaneTest extends JFrame {
 
@@ -75,8 +85,17 @@ public class JSplitPaneTest extends JFrame {
 
 
 
-        JScrollPane jScrollMindMap = new JScrollPane(myMindMapPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//        JScrollPane jScrollMindMap = new JScrollPane(myMindMapPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+//                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        JScrollPane jScrollMindMap = new JScrollPane(myMindMapPane);
+        int horizontalPolicy = JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+        int verticalPolicy = JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED;
+        jScrollMindMap.setHorizontalScrollBarPolicy(horizontalPolicy);
+        jScrollMindMap.setVerticalScrollBarPolicy(verticalPolicy);
+
+
+
 
 
         JScrollPane jScrollAttribute = new JScrollPane(myAttributePane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -377,6 +396,7 @@ public class JSplitPaneTest extends JFrame {
 
 
     class MenuListener implements ActionListener {
+        Gson gson = new Gson();
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -397,6 +417,7 @@ public class JSplitPaneTest extends JFrame {
 
                 int id;
                 String text;
+                String json;
                 int nodeX;
                 int nodeY;
                 int nodeW;
@@ -411,9 +432,7 @@ public class JSplitPaneTest extends JFrame {
                 int index = 0;
 
                 for (int i=0; i<components.length; i++) {
-
                     if (components[i] instanceof Node) {
-
                         temp = (Node) components[i];
                         id = temp.getId();
                         text = temp.getText();
@@ -430,9 +449,20 @@ public class JSplitPaneTest extends JFrame {
                         saveHelpers[index] = new SaveHelper(id, text, nodeX, nodeY, nodeW, nodeH, color, level, parent.getId());
                         index++;
                     }
-
                 }
-                System.out.println(saveHelpers);
+                json = gson.toJson(saveHelpers);
+                System.out.println(json);
+                try {
+
+                    FileWriter file = new FileWriter("/Users/shinjeongmin/JavaPorject/test.json");
+                    file.write(json);
+                    file.flush();
+                    file.close();
+                    System.out.println("저장완료");
+
+                } catch (IOException err) {
+                    err.printStackTrace();
+                }
 
             }
             else if (e.getSource() == anotherNameSaveMenuItem) {
@@ -472,7 +502,7 @@ public class JSplitPaneTest extends JFrame {
 
 
     class ToolBarListener implements ActionListener {
-
+        Gson gson = new Gson();
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -485,18 +515,41 @@ public class JSplitPaneTest extends JFrame {
             else if (e.getSource() == openToolBtn) {
 
                 //저장했던 파일 열기 하는 코드
+                JSONParser parser = new JSONParser();
+
+                try {
+
+                    Object obj = parser.parse(new FileReader("/Users/shinjeongmin/JavaPorject/test.json"));
+                    System.out.println(obj);
+
+                    JSONObject jsonObject = (JSONObject) obj;
+                    System.out.println(jsonObject);
+
+
+//                    // loop array
+//                    JSONArray msg = (JSONArray) jsonObject.get("messages");
+//                    Iterator<String> iterator = msg.iterator();
+//                    while (iterator.hasNext()) {
+//                        System.out.println(iterator.next());
+//                    }
+
+                } catch (FileNotFoundException error) {
+                    error.printStackTrace();
+                } catch (IOException error) {
+                    error.printStackTrace();
+                } catch (ParseException error) {
+                    error.printStackTrace();
+                }
             }
+
             else if (e.getSource() == saveToolBtn) {
                 Component[] components = myMindMapPane.getComponents();
 
                 saveHelpers = new SaveHelper[components.length];
 
-                int id;
+                int id,nodeX,nodeY,nodeW,nodeH;
                 String text;
-                int nodeX;
-                int nodeY;
-                int nodeW;
-                int nodeH;
+                String json;
                 Point point;
                 Dimension dimension;
                 Color color;
@@ -522,21 +575,25 @@ public class JSplitPaneTest extends JFrame {
                         color = temp.getColor();
                         level = temp.getLevel();
                         parent = temp.getParentNode();
-                        System.out.println(id);
-                        System.out.println(text);
-                        System.out.println(nodeX);
-                        System.out.println(nodeY);
-                        System.out.println(nodeW);
-                        System.out.println(nodeH);
-                        link = new SaveHelper(id, text, nodeX, nodeY, nodeW, nodeH, color, level, parent.getId());
-                        saveHelpers[index] = link;
+
+                        saveHelpers[index] = new SaveHelper(id, text, nodeX, nodeY, nodeW, nodeH, color, level, parent.getId());
                         index++;
-                        System.out.println(link);
-
                     }
-                   // System.out.println(saveHelpers);
-
                 }
+                json = gson.toJson(saveHelpers);
+                System.out.println(json);
+                try {
+
+                    FileWriter file = new FileWriter("/Users/shinjeongmin/JavaPorject/test.json");
+                    file.write(json);
+                    file.flush();
+                    file.close();
+                    System.out.println("저장완료");
+
+                } catch (IOException err) {
+                    err.printStackTrace();
+                }
+
             }
             else if (e.getSource() == anotherNameSaveToolBtn) {
 
